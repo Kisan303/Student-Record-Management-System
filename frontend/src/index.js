@@ -6,12 +6,43 @@ import {
 } from "react-router-dom";
 import './index.css';
 import App from './App';
+import Login from './components/Login';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />
+  },
+  {
+    path: "/admin-login",
+    element: <App />,
+    children: [
+      {
+        path: "/admin-login",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/staff-login",
+    element: <App />,
+    children: [
+      {
+        path: "/staff-login",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/student-login",
+    element: <App />,
+    children: [
+      {
+        path: "/student-login",
+        element: <Login />,
+      },
+    ],
   }
 ]);
 
