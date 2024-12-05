@@ -10,6 +10,8 @@ import User from './User';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminDashboard from './components/AdminDashboard';
+import CourseReport from './components/CourseReport';
+import CourseForm from './components/CourseForm';
 import StaffDashboard from './components/StaffDashboard';
 import StudentDashboard from './components/StudentDashboard';
 import reportWebVitals from './reportWebVitals';
@@ -56,6 +58,36 @@ const router = createBrowserRouter([
       {
         path: "/admin-dashboard",
         element: <AdminDashboard />,
+      },
+    ],
+  },
+  {
+    path: "/course-report",
+    element: <User />,
+    children: [
+      {
+        path: "/course-report",
+        element: <CourseReport />,
+      },
+    ],
+  },
+  {
+    path: "/create-course",
+    element: <User />,
+    children: [
+      {
+        path: "/create-course",
+        element: <CourseForm />,
+      },
+    ],
+  },
+  {
+    path: "/update-course",
+    element: <User />,
+    children: [
+      {
+        path: "/update-course",
+        element: <CourseForm />,
       },
     ],
   },

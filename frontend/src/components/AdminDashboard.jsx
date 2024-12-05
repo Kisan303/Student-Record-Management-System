@@ -1,10 +1,16 @@
 export default function AdminDashboard(){
     return(
         <>
-        <div class="col-12 bg-primary-subtle text-primary-emphasis vh-100  d-flex align-items-center justify-content-center">
+        <div class="col-12 bg-primary-subtle text-primary-emphasis vh-100  d-flex justify-content-center">
         <div class="row col-12">
             <div class="col-4"></div>
-            <div class="col-4 p-3">
+            <div class="container-fluid col-4 p-3">
+                <ul navbar-nav d-flex ms-auto>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/course-report">Course Report</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">School Report</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Faculty Staff Report</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Student Report</a></li>
+                </ul>
             </div>        
             <div class="col-4"></div>
         </div>
