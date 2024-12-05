@@ -6,8 +6,10 @@ import {
 } from "react-router-dom";
 import './index.css';
 import App from './App';
+import User from './User';
 import Login from './components/Login';
 import Register from './components/Register';
+import Dashboard from './components/Dashboard';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -47,31 +49,31 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin-dashboard",
-    element: <App />,
+    element: <User />,
     children: [
       {
         path: "/admin-dashboard",
-        element: <Register />,
+        element: <Dashboard />,
       },
     ],
   },
   {
     path: "/staff-dashboard",
-    element: <App />,
+    element: <User />,
     children: [
       {
         path: "/staff-dashboard",
-        element: <Register />,
+        element: <Dashboard />,
       },
     ],
   },
   {
     path: "/student-dashboard",
-    element: <App />,
+    element: <User />,
     children: [
       {
         path: "/student-dashboard",
-        element: <Register />,
+        element: <Dashboard />,
       },
     ],
   },
