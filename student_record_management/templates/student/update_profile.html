@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Update Your Profile</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="address">Address</label>
+            {{ form.address(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            {{ form.phone_number(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+{% endblock %}
