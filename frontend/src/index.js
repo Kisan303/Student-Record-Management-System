@@ -10,11 +10,14 @@ import User from './User';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminDashboard from './components/AdminDashboard';
+import StaffRerport from './components/StaffReport';
+import StudentReport from './components/StudentReport';
 import CourseReport from './components/CourseReport';
 import CourseForm from './components/CourseForm';
 import StaffDashboard from './components/StaffDashboard';
 import StudentDashboard from './components/StudentDashboard';
 import reportWebVitals from './reportWebVitals';
+import StaffReport from './components/StaffReport';
 
 const router = createBrowserRouter([
   {
@@ -92,12 +95,32 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/staff-report",
+    element: <User />,
+    children: [
+      {
+        path: "/staff-report",
+        element: <StaffReport />,
+      },
+    ],
+  },
+  {
+    path: "/student-report",
+    element: <User />,
+    children: [
+      {
+        path: "/student-report",
+        element: <StudentReport />,
+      },
+    ],
+  },
+  {
     path: "/staff-dashboard",
     element: <User />,
     children: [
       {
         path: "/staff-dashboard",
-        element: <StaffDashboard />,
+        element: <StaffDashboard />
       },
     ],
   },
