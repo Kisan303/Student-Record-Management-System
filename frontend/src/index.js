@@ -9,7 +9,9 @@ import App from './App';
 import User from './User';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from './components/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
+import StaffDashboard from './components/StaffDashboard';
+import StudentDashboard from './components/StudentDashboard';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin-dashboard",
-        element: <Dashboard />,
+        element: <AdminDashboard />,
       },
     ],
   },
@@ -63,7 +65,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/staff-dashboard",
-        element: <Dashboard />,
+        element: <StaffDashboard />,
       },
     ],
   },
@@ -73,7 +75,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/student-dashboard",
-        element: <Dashboard />,
+        element: <StudentDashboard />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-export default function Dashboard(){
+export default function StudentDashboard(){
     return(
         <>        
         <div class="row col-12 bg-primary-subtle text-primary-emphasis p-5">
