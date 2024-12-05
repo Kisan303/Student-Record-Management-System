@@ -1,4 +1,22 @@
+import { useEffect, useState } from "react";
+
 export default function Login(){
+    const [title, setTitle] = useState("");
+    const [userDashboard, setuserDashboard] = useState("");
+    const url = window.location.href;
+
+    useEffect(( ) => {
+        if (url.includes("admin-login")) setTitle("Admin");
+        if (url.includes("staff-login")) setTitle("Faculty Staff");
+        if (url.includes("student-login")) setTitle("Student");
+    }, [ ]);
+
+    function toggleUserDashboard() {
+        if (url.includes("admin-login")) setuserDashboard("admin-dashboard");
+        if (url.includes("staff-login")) setuserDashboard("staff-dashboard");
+        if (url.includes("student-login")) setuserDashboard("student-dashboard");
+    }
+
     return (
         <>
         <div>      
@@ -6,7 +24,7 @@ export default function Login(){
                 <div class="row col-12">          
                     <div class="col-4"></div>
                     <div class="text-center col-4 border-bottom"> 
-                        <h1>Admin</h1>
+                        <h1>{title}</h1>
                     </div>
                     <div class="col-4"></div>
                     <div class="col-4"></div>
@@ -34,7 +52,7 @@ export default function Login(){
                                 </div>
                                 </div>
                             </div>
-                            <a href="dashboard" class="btn btn-primary">Log in</a>
+                            <a href={userDashboard} class="btn btn-primary" onClick={toggleUserDashboard}>Log in</a>
                         </form>
                         <div>
                             <a href="register" class="btn btn-primary">Register new account</a>

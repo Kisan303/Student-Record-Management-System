@@ -46,6 +46,36 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/admin-dashboard",
+    element: <App />,
+    children: [
+      {
+        path: "/admin-dashboard",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/staff-dashboard",
+    element: <App />,
+    children: [
+      {
+        path: "/staff-dashboard",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/student-dashboard",
+    element: <App />,
+    children: [
+      {
+        path: "/student-dashboard",
+        element: <Register />,
+      },
+    ],
+  },
+  {
     path: "/register",
     element: <App />,
     children: [
