@@ -7,6 +7,7 @@ import {
 import './index.css';
 import App from './App';
 import Login from './components/Login';
+import Register from './components/Register';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -41,6 +42,16 @@ const router = createBrowserRouter([
       {
         path: "/student-login",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/register",
+    element: <App />,
+    children: [
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   }

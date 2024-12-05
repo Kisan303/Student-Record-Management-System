@@ -1,6 +1,7 @@
 import './App.css';
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -8,9 +9,6 @@ function App() {
       <Navbar />
       <div class="col-12 bg-primary-subtle text-primary-emphasis vh-100">
         <Outlet />
-        <div class="col-6 bg-body-tertiary position-absolute bottom-0 start-0 p-3">
-            <h1 class="p-3">Welcome to Student Record Management System</h1>
-        </div>
       </div>
       <div id="about-us" class="col-12 bg-body-tertiary text-primary-emphasis vh-100 p-5">
           <h1 class="p-3 text-center">About Us</h1>
@@ -61,21 +59,7 @@ function App() {
           <div class="col-4"></div>
         </div>
       </div>
-      <div class="row col-12">
-          <div class="col-8">            
-              <div class="col-2 p-3 text-bg-dark"><h1>LOGO</h1></div>
-          </div>
-          <div class="col-4">
-              <ul class="list-group list-group-flush text-primary">
-                  <li class="list-group-item"><a href="#" class="text-dark text-decoration-none">Home</a></li>
-                  <li class="list-group-item"><a href="/admin-login" class="text-dark text-decoration-none">Admin</a></li>
-                  <li class="list-group-item"><a href="#" class="text-dark text-decoration-none">Faculty</a></li>
-                  <li class="list-group-item"><a href="#" class="text-dark text-decoration-none">Student</a></li>
-                  <li class="list-group-item"><a href="#about-us" class="text-dark text-decoration-none">About Us</a></li>
-                  <li class="list-group-item"><p>&copy; 2024 Company Name. All Rights Reserved</p></li>
-              </ul>
-          </div>
-      </div>
+      <Footer />
     </div>
   );
 }
