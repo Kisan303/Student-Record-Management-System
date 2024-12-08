@@ -24,17 +24,17 @@ users_collection = db["users"]
 
 
 # Empty table
-users_collection.drop()
+# users_collection.drop()
 
 # To add data to MongoDB we can use the client and the functions insert_many() or insert_one()
 # insert_many() allows you to add a list of JSONs
 # insert_one() allows you to add a single JSON
 
-mock_data = [{"role": "admin", "firstname": "Kisan", "lastname": "Rai", "username": "test_admin", "email": "test_admin@gmail.com", "password": "admin1234"},
-             {"role": "teacher", "firstname": "Mahan", "lastname": "Timalsena", "username": "test_teacher", "email": "test_teacher@gmail.com",  "password": "teacher1234"},
-             {"role": "student", "firstname": "Ralph", "lastname": "Ompoc", "username": "test_student", "email": "test_student@gmail.com",  "password": "student1234"}]
+# mock_data = [{"role": "admin", "firstname": "Kisan", "lastname": "Rai", "username": "test_admin", "email": "test_admin@gmail.com", "password": "admin1234"},
+#              {"role": "teacher", "firstname": "Mahan", "lastname": "Timalsena", "username": "test_teacher", "email": "test_teacher@gmail.com",  "password": "teacher1234"},
+#              {"role": "student", "firstname": "Ralph", "lastname": "Ompoc", "username": "test_student", "email": "test_student@gmail.com",  "password": "student1234"}]
 
-users_collection.insert_many(mock_data)
+# users_collection.insert_many(mock_data)
 
 @flask_app.route("/<string:user_id>", methods=['GET'])
 def home(user_id):
@@ -43,6 +43,15 @@ def home(user_id):
     print(user_id)
     user = users_collection.find_one({"_id": ObjectId(str(user_id))})
     return json.dumps(user, default=str)
+
+@flask_app.route("/get_all_users", methods=['GET'])
+def get_all_users():
+    try:
+        users = list(users_collection.find({}, {"_id": 0}))
+        print(users)
+        return jsonify(users), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @flask_app.route("/register", methods=['POST'])
 def register():

@@ -158,8 +158,8 @@ export default function Register(){
                             </div>
                         </div>
                         <div className="col-12">                            
-                            <button type="submit">register</button>
-                            <a href="/" className="btn btn-primary">Submit</a>
+                            <button type="submit" className="btn btn-primary">Register</button>
+                            <a href="/" className="btn btn-primary d-none">Submit</a>
                         </div>
                     </form>
                 </div>        

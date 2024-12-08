@@ -3,12 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export default function AdminDashboard(){
     const [dataSet, setDataSet] = useState([]);
+    const [listOfUsers, setListOfUsers] = useState([]);
     const params = useParams(); 
 
     useEffect(() => {    
         displayDashboard();
+        displayListOfUsers();
     });   
-    async function displayDashboard() { 
+    async function displayDashboard () {
         try{
             await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
                 method: "GET",
@@ -19,6 +21,21 @@ export default function AdminDashboard(){
             .then(promisedata => setDataSet(promisedata))
             .catch(error => console.error("Error:", error));
             console.log("Able to fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    };   
+    async function displayListOfUsers() { 
+        try{
+            await fetch(`http://127.0.0.1:5000/get_all_users`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setListOfUsers(promisedata))
+            .catch(error => console.error("Error:", error));
+            console.log("Able to fetch all users!");            
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
@@ -55,8 +72,8 @@ export default function AdminDashboard(){
             </div>
             <div className="col-1"></div>
             
-            <div className="col-1"></div>
-            <div className="col-10 text-start">
+            <div className="col-1 d-none"></div>
+            <div className="col-10 text-start d-none">
                 <h1>Dashboard</h1>
                 <h3>Increase of student this year 2024.</h3>
                 <div className="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -75,6 +92,32 @@ export default function AdminDashboard(){
                 <div className="progress-bar bg-danger hw-100 col-12">100%</div>
                 </div>
             </div>
+            <div className="col-1 d-none"></div>            
+            <div className="col-1"></div>
+            <div className="col-10">
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-start">
+                        {listOfUsers.map((user, index) => (
+                            <tr>
+                                <td className="text-center">{index+1}</td>
+                                <td>{user.firstname} {user.lastname}</td>
+                                <td>{user.email}</td>
+                                <td>{user.username}</td>
+                                <td>{user.role}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>                
             <div className="col-1"></div>
         </div>
         </div>
