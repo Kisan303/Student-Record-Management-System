@@ -19,25 +19,42 @@ export default function AdminDashboard(){
     // })
     // .catch((error) => {
     //     console.error('Error fetching data:', error);
-    // });    
-
-    axios.get(`http://127.0.0.1:5000/${params.id.toString()}`)
-        .then((response)=>{
-            const userItems = response.data.items;   
-            const userData = response.data;
-            console.log(userItems);
-            setDataSet(userData);
-        })
-        .catch((error1)=>{
-            console.error('Error fetching data:', error1);
-    });
-    // useEffect(() => {    
-    // });
+    // }); 
+    
+    useEffect(() => {    
+        displayDashboard();
+    });   
+    async function displayDashboard() { 
+        try{
+            await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setDataSet(promisedata))
+            .catch(error => console.error("Error:", error));
+            console.log("Able to fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    // {
+    //     axios.get(`http://127.0.0.1:5000/${params.id.toString()}`)
+    //         .then((response)=>{
+    //             const userItems = response.data.items;   
+    //             const userData = response.data;
+    //             console.log(userItems);
+    //             setDataSet(userData);
+    //         })
+    //         .catch((error1)=>{
+    //             console.error('Error fetching data:', error1);
+    //     });
+    };
     return(
         <>
         <div className="col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">
         <div className="row col-12">
-            <div className="col-1"><p>Result: {dataSet.firstname}</p></div>
+            <div className="col-1"></div>
             <div className="navbar navbar-expand-lg bg-body-tertiary col-10">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,8 +69,19 @@ export default function AdminDashboard(){
                     </ul>
                 </div>
             </div>
-            </div>       
+            </div> 
+            <div className="col-1"></div> 
+
             <div className="col-1"></div>
+            <div className="col-10 p-1 text-start">
+                <ul className="list-group list-group">
+                <li className="list-group-item">Professor Name: {dataSet.firstname} {dataSet.lastname}</li>
+                <li className="list-group-item">Faculty E-mail: {dataSet.email}</li>
+                <li className="list-group-item">Role: {dataSet.role}</li>
+                </ul>      
+            </div>
+            <div className="col-1"></div>
+            
             <div className="col-1"></div>
             <div className="col-10 text-start">
                 <h1>Dashboard</h1>

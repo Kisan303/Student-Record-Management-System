@@ -9,7 +9,6 @@ export default function Navbar() {
         <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/"><img style={{width: "auto", height: "50px"}} src={logo} alt="Project Logo"></img></a>
-                <p>Hi {userFirstName}!</p>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

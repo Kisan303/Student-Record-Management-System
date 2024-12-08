@@ -63,13 +63,13 @@ def login():
             print("Success")
             print(str(user))
             print(str(user.get("_id")))
-            return json.dumps(user, default=str)
+            return json.dumps(user, default=str), 200
         else:
             print("Failed")
-            return json.dumps({"message": "Fail to Login!"}, default=str)
+            return json.dumps({"message": "Fail to Login!"}, default=str), 401
     else:
         print("User not registered!")
-        return json.dumps({"message": "User not registered!"}, default=str)
+        return json.dumps({"message": "User not registered!"}, default=str), 401
 
 @flask_app.route("/mongo_conn")
 def mongo_conn():

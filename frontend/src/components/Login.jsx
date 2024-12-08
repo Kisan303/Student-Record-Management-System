@@ -4,11 +4,25 @@ import axios from "axios";
 
 export default function Login(){
     const [title, setTitle] = useState("");
+    const [formUser, setFormUser] = useState({
+        email: "",
+        password: "",
+        _id: "",
+    });
+    const [fetchUser, setFetchUser] = useState({
+        _id: "",
+        email: "",
+        password: "",
+        firstname: "",
+        lastname: "",
+        role: "",
+        username: "",
+    });
     const [userDashboard, setuserDashboard] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState(null);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
     const [datas, setDatas] = useState([]);
-    const [responseMessage, setResponseMessage] = useState(null);
+    const [responseMessage, setResponseMessage] = useState("");
     const url = window.location.href;    
     const navigate = useNavigate();
 
@@ -18,31 +32,78 @@ export default function Login(){
         if (url.includes("student-login")) setTitle("Student");
     }, []);
 
-    function handleLogin(){
-        axios.post('http://127.0.0.1:5000/login',{'email': email, 'password': password})
-            .then((response) => {
-                console.log(response);
-                axios.get('http://127.0.0.1:5000/login')
-                    .then((responsenew)=>{
-                        console.log(responsenew.data);
-                        setDatas(responsenew.data);
-                        console.log(datas._id)
-                        navigate(`http://localhost:3000/admin-dashboard/${datas._id.toString()}`);
-                    })
-                    .catch((error1)=>{
-                        console.error('Error fetching data:', error1);
-                    });
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
+    async function handleLogin(e){
+        e.preventDefault();
+        const user = { ...formUser };
+        try{
+            let response;
+            let userid;
+            response = await fetch('http://127.0.0.1:5000/login', {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(user),
+                  });
+            //const record = response.json();
+            //setFetchUser(record);
+            //console.log(record);
+            //console.log(fetchUser._id.toString());
+            if(response.ok) {
+                await fetch('http://127.0.0.1:5000/login', {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(user),
+                }).then(data => data.json())
+                .then(promisedata => userid = promisedata._id)
+                .catch(error => console.error("Error:", error));
+                //xsetuserDashboard("/admin-dashboard/"+userid);
+                console.log("Success Fetch!" + userid);
+                navigate(`/admin-dashboard/${userid}`);
+            };
+            if(!response.ok) console.log("Fail Fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+        //console.log("Handle login.");
+        // axios.post('http://127.0.0.1:5000/login',{'email': email, 'password': password})
+        //     .then((response) => {
+        //         console.log("Post user infor!" + response)
+        //         // axios.get(`http://127.0.0.1:5000/login`)
+        //         //     .then((responsenew)=>{
+        //         //         console.log("Get user infor!")
+        //         //         const userItems = responsenew.data.items;   
+        //         //         const userData = responsenew.data;
+        //         //         console.log(userData._id);
+        //         //         setDatas(userData);
+        //         //     })
+        //         //     .catch((error1)=>{
+        //         //         console.error('Error fetching data:', error1);
+        //         // });
+        //         //setuserDashboard("/admin-dashboard/"+datas._id);
+        //         // const userInfo = response.data;
+        //         // setDatas(userInfo);
+        //         // console.log(userInfo.toString());
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error fetching data:', error);
+        //     });
+        console.log("Redirect to Dashboard!")
+        //setuserDashboard("/admin-dashboard/"+datas._id);
+    };
+    function updateForm(value) {
+        return setFormUser((prev) => {
+            return { ...prev, ...value };
+        });
     };
 
     function toggleUserDashboard() {
-        if (url.includes("admin-login")) setuserDashboard("http://localhost:3000/admin-dashboard/67553159884e60348aaf39f0");
+        if (url.includes("admin-login")) setuserDashboard("/admin-dashboard/6755a1074fcf24d5f7d477a7");
         if (url.includes("staff-login")) setuserDashboard("staff-dashboard");
         if (url.includes("student-login")) setuserDashboard("student-dashboard");
-    }
+    };
 
     return (
         <>
@@ -52,31 +113,31 @@ export default function Login(){
                     <div className="col-4"></div>
                     <div className="text-center col-4 border-bottom"> 
                         <h1>{title}</h1>
-                        <h3>Input: {email}</h3>
+                        <h3>Input: {formUser.email}</h3>
                         <h5>Response: {datas}</h5>
                         <h6>{responseMessage}</h6>
                     </div>
                     <div className="col-4"></div>
                     <div className="col-4"></div>
                     <div className="col-4 p-3">
-                        <form onSubmit={handleLogin}>
+                        <form onSubmit={handleLogin} action={userDashboard}>
                             <div className="row mb-3">
-                                <label for="inputEmail3" className="col-sm-2 col-form-label">Email</label>
+                                <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
                                 <div className="col-sm-10">
-                                <input type="email" className="form-control" id="inputEmail3" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                <input type="email" className="form-control" id="inputEmail3" value={formUser.email} onChange={(e) => updateForm({email: e.target.value})}/>
                                 </div>
                             </div>
                             <div className="row mb-3">
-                                <label for="inputPassword3" className="col-sm-2 col-form-label">Password</label>
+                                <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Password</label>
                                 <div className="col-sm-10">
-                                <input type="password" className="form-control" id="inputPassword3" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                <input type="password" className="form-control" id="inputPassword3" value={formUser.password} onChange={(e) => updateForm({password: e.target.value})}/>
                                 </div>
                             </div>
                             <div className="row mb-3 d-none">
                                 <div className="col-sm-10 offset-sm-2 text-start">
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" id="gridCheck1"/>
-                                    <label className="form-check-label" for="gridCheck1">
+                                    <label className="form-check-label" htmlFor="gridCheck1">
                                     Remember Me
                                     </label>
                                 </div>

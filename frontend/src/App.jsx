@@ -36,19 +36,19 @@ function App() {
                 <h1>Contact Us</h1>
               </div>
               <div className="col-md-12">
-                  <label for="inputFirstName" className="form-label">First Name</label>
+                  <label htmlFor="inputFirstName" className="form-label">First Name</label>
                   <input type="text" className="form-control" id="inputFirstName" placeholder="First Name"/>
               </div>
               <div className="col-md-12">
-                  <label for="inputLastName" className="form-label">Last Name</label>
+                  <label htmlFor="inputLastName" className="form-label">Last Name</label>
                   <input type="text" className="form-control" id="inputLastName" placeholder="Last Name"/>
               </div>
               <div className="col-md-12">
-                  <label for="inputEmail" className="form-label">Email</label>
+                  <label htmlFor="inputEmail" className="form-label">Email</label>
                   <input type="email" className="form-control" id="inputEmail"/>
               </div>
               <div className="col-md-12">
-                <label for="inputMessage" className="form-label">Message</label>
+                <label htmlFor="inputMessage" className="form-label">Message</label>
                 <textarea className="form-control vh" id="inputMessage" placeholder="Write your message here."></textarea>
               </div>
               <div className="d-flex justify-content-end">

@@ -115,21 +115,21 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/staff-dashboard",
+    path: "/staff-dashboard/:id",
     element: <User />,
     children: [
       {
-        path: "/staff-dashboard",
+        path: "/staff-dashboard/:id",
         element: <StaffDashboard />
       },
     ],
   },
   {
-    path: "/student-dashboard",
+    path: "/student-dashboard/:id",
     element: <User />,
     children: [
       {
-        path: "/student-dashboard",
+        path: "/student-dashboard/:id",
         element: <StudentDashboard />,
       },
     ],
