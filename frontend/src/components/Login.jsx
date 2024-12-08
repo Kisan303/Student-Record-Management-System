@@ -1,15 +1,41 @@
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login(){
     const [title, setTitle] = useState("");
     const [userDashboard, setuserDashboard] = useState("");
-    const url = window.location.href;
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState(null);
+    const [datas, setDatas] = useState(null);
+    const [responseMessage, setResponseMessage] = useState(null);
+    const url = window.location.href;    
+    const navigate = useNavigate();
 
-    useEffect(( ) => {
+    useEffect(() => {
         if (url.includes("admin-login")) setTitle("Admin");
         if (url.includes("staff-login")) setTitle("Faculty Staff");
         if (url.includes("student-login")) setTitle("Student");
-    }, [ ]);
+    }, []);
+
+    function handleLogin(){
+        axios.post('http://127.0.0.1:5000/users',{'email':email})
+            .then((response) => {
+                setDatas(response.data);
+                console.log(response);
+                axios.get('http://127.0.0.1:5000/')
+                    .then((responsenew)=>{
+                        console.log(responsenew.data);
+                    })
+                    .catch((error1)=>{
+                        console.error('Error fetching data:', error1);
+                    });
+                navigate("/admin-dashboard");
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    };
 
     function toggleUserDashboard() {
         if (url.includes("admin-login")) setuserDashboard("admin-dashboard");
@@ -20,53 +46,57 @@ export default function Login(){
     return (
         <>
         <div>      
-            <div class="col-12 bg-primary-subtle text-primary-emphasis">
-                <div class="row col-12">          
-                    <div class="col-4"></div>
-                    <div class="text-center col-4 border-bottom"> 
+            <div className="col-12 bg-primary-subtle text-primary-emphasis">
+                <div className="row col-12">          
+                    <div className="col-4"></div>
+                    <div className="text-center col-4 border-bottom"> 
                         <h1>{title}</h1>
+                        <h3>Input: {email}</h3>
+                        <h5>Response: {datas}</h5>
+                        <h6>{responseMessage}</h6>
                     </div>
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
-                    <div class="col-4 p-3">
-                        <form>
-                            <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3"/>
+                    <div className="col-4"></div>
+                    <div className="col-4"></div>
+                    <div className="col-4 p-3">
+                        <form onSubmit={handleLogin}>
+                            <div className="row mb-3">
+                                <label for="inputEmail3" className="col-sm-2 col-form-label">Email</label>
+                                <div className="col-sm-10">
+                                <input type="email" className="form-control" id="inputEmail3" value={email} onChange={(e) => setEmail(e.target.value)}/>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword3"/>
+                            <div className="row mb-3">
+                                <label for="inputPassword3" className="col-sm-2 col-form-label">Password</label>
+                                <div className="col-sm-10">
+                                <input type="password" className="form-control" id="inputPassword3" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-10 offset-sm-2 text-start">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1"/>
-                                    <label class="form-check-label" for="gridCheck1">
+                            <div className="row mb-3">
+                                <div className="col-sm-10 offset-sm-2 text-start">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" id="gridCheck1"/>
+                                    <label className="form-check-label" for="gridCheck1">
                                     Remember Me
                                     </label>
                                 </div>
                                 </div>
-                            </div>
-                            <a href={userDashboard} class="btn btn-primary" onClick={toggleUserDashboard}>Log in</a>
+                            </div>                              
+                            <button type="submit">LOGIN</button>
+                            <a href={userDashboard} className="btn btn-primary" onClick={toggleUserDashboard}>Log in</a>
                         </form>
                         <div>
-                            <a href="register" class="btn btn-primary">Register new account</a>
+                            <a href="register" className="btn btn-primary">Register new account</a>
                         </div>
                     </div>        
-                    <div class="col-4"></div>
+                    <div className="col-4"></div>
                 </div>
-                <div class="col-6 bg-body-tertiary position-absolute bottom-0 start-0 p-3">
-                    <h1 class="p-3">Log in as Admin</h1>
+                <div className="col-6 bg-body-tertiary position-absolute bottom-0 start-0 p-3">
+                    <h1 className="p-3">Log in as Admin</h1>
                 </div>
             </div>
         </div>
-        <div class="col-6 bg-body-tertiary position-absolute bottom-0 start-0 p-3">
-            <h1 class="p-3">Welcome to Student Record Management System</h1>
+        <div className="col-6 bg-body-tertiary position-absolute bottom-0 start-0 p-3">
+            <h1 className="p-3">Welcome to Student Record Management System</h1>
         </div>
         </>
     );

@@ -1,33 +1,33 @@
 export default function CourseReport(){
     return (
         <>
-        <div class="row col-12"> 
-            <div class="col-1"></div>  
-            <div class="col-10">
-                <nav class="navbar">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/admin-dashboard">Home</a>                
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search Course Here..." aria-label="Search"/>
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+        <div className="row col-12"> 
+            <div className="col-1"></div>  
+            <div className="col-10">
+                <nav className="navbar">
+                <div className="container-fluid">
+                    <a className="navbar-brand" href="/admin-dashboard">Home</a>                
+                    <form className="d-flex" role="search">
+                        <input className="form-control me-2" type="search" placeholder="Search Course Here..." aria-label="Search"/>
+                        <button className="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                     </button>    
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                        <a className="nav-link active" aria-current="page" href="#">Dashboard</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Reports
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/create-course">Create Course</a></li>
-                                <li><a class="dropdown-item" href="#">School</a></li>
-                                <li><a class="dropdown-item" href="#">Faculty Staff</a></li>
-                                <li><a class="dropdown-item" href="#">Student</a></li>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="/create-course">Create Course</a></li>
+                                <li><a className="dropdown-item" href="#">School</a></li>
+                                <li><a className="dropdown-item" href="#">Faculty Staff</a></li>
+                                <li><a className="dropdown-item" href="#">Student</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -35,12 +35,12 @@ export default function CourseReport(){
                 </div>
                 </nav>
             </div>  
-            <div class="col-1"></div>        
-            <div class="col-1"></div>      
-            <div class="col-10 p-1">
-                <table class="table table-striped">
+            <div className="col-1"></div>        
+            <div className="col-1"></div>      
+            <div className="col-10 p-1">
+                <table className="table table-striped">
                 <thead>
-                    <tr class="text-center">
+                    <tr className="text-center">
                     <th scope="col">Course Code</th>
                     <th scope="col">Course Name</th>
                     <th scope="col">Description</th>
@@ -51,37 +51,37 @@ export default function CourseReport(){
                     <tr>
                     <th scope="row">CSD-4553-01</th>
                     <td>Cloud Computing</td>
-                    <td class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td class="text-center">                          
-                        <a href="/update-course" class="btn btn-info">Update</a>
+                    <td className="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td className="text-center">                          
+                        <a href="/update-course" className="btn btn-info">Update</a>
                         <br/>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="#" className="btn btn-danger">Delete</a>
                     </td>
                     </tr>
                     <tr>
                     <th scope="row">CSD-3301-01</th>
                     <td>Full Stack JavaScript</td>
-                    <td class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td class="text-center">                          
-                        <a href="/update-course" class="btn btn-info">Update</a>
+                    <td className="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td className="text-center">                          
+                        <a href="/update-course" className="btn btn-info">Update</a>
                         <br/>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="#" className="btn btn-danger">Delete</a>
                     </td>
                     </tr>
                     <tr>
                     <th scope="row">CSD-4202-01</th>
                     <td>DevOps: Tools and Practices</td>
-                    <td class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td class="text-center">                        
-                        <a href="/update-course" class="btn btn-info">Update</a>
+                    <td className="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td className="text-center">                        
+                        <a href="/update-course" className="btn btn-info">Update</a>
                         <br/>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="#" className="btn btn-danger">Delete</a>
                     </td>
                     </tr>
                 </tbody>
                 </table>
             </div>      
-            <div class="col-1"></div>
+            <div className="col-1"></div>
         </div>
         </>
     );

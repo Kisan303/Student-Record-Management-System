@@ -6,7 +6,7 @@ function User() {
   return (
     <div className="App">
       <NavbarUser />
-      <div class="col-12 bg-primary-subtle text-primary-emphasis vh-100">
+      <div className="col-12 bg-primary-subtle text-primary-emphasis vh-100">
         <Outlet />
       </div>
       <Footer />
