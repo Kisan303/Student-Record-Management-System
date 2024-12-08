@@ -1,28 +1,41 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 export default function StaffReport(){
+    const [userID, setUserID] = useState("");
+    const params = useParams(); 
+    useEffect(() => {  
+        setUserID(params.id.toString());
+    }); 
     return(
         <>
-        <div className="row col-12 bg-primary-subtle text-primary-emphasis p-5  d-flex align-items-center justify-content-center">            
-            <div className="col-2"></div>              
-            <div className="navbar navbar-expand-lg bg-body-tertiary col-8">
-                <ul className="nav nav-tabs">
-                    <li className="nav-item">
-                        <a className="nav-link" aria-current="page" href="/course-report">Course Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/staff-report">School Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/staff-report">Faculty Staff Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link active" href="/student-report">Student Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/register">Enroll Student</a>
-                    </li>
-                </ul>
+        <div className="row col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">            
+            <div className="col-1"></div>              
+            <div className="navbar navbar-expand-lg bg-body-tertiary col-10">
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul className="nav nav-tabs">
+                        <li className="nav-item">
+                            <a className="nav-link" aria-current="page" href={`/admin-dashboard/${userID}`}>Dashboard</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">School Report</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href={`/staff-report/${userID}`}>Faculty Staff Report</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link active" href={`/student-report/${userID}`}>Student Report</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href={`/register/${userID}`}>Register User</a>
+                        </li>
+                    </ul>
+                </div>
             </div> 
-            <div className="col-2"></div>
+            <div className="col-1"></div>    
             <div className="col-2"></div>
             <div className="col-8">                
                 <h1>Students Portfolio</h1>

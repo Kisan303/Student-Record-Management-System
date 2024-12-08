@@ -1,15 +1,10 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Register(){
-    // const [username, setUsername] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [confirmPassword, setConfirmPassword] = useState("");
-    // const [role, setRole] = useState("admin");
-    // const [responseMessage, setResponseMessage] = useState("");
-    // const [data, setData] = useState(null);
+    const navigate = useNavigate();
+    const [userID, setUserID] = useState("");
+    const params = useParams(); 
     const [formUser, setFormUser] = useState({
         email: "",
         password: "",
@@ -18,6 +13,9 @@ export default function Register(){
         role: "",
         username: "",
     });
+    useEffect(() => {  
+        setUserID(params.id.toString());
+    });   
     async function handleRegister(e){
         e.preventDefault();
         const registerUser = { ...formUser };
@@ -31,7 +29,10 @@ export default function Register(){
                     },
                     body: JSON.stringify(registerUser),
                   });
-            if(response.ok) console.log("Success registration!");
+            if(response.ok) {
+                console.log("Success registration!");
+                navigate(`/admin-dashboard/${userID}`)
+            };
             if(!response.ok) console.log("Fail to register!");
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
@@ -43,40 +44,36 @@ export default function Register(){
             return { ...prev, ...value };
         });
     };
-    // useEffect(() => {
-    //     axios.get('http://127.0.0.1:5000/api/data')
-    //         .then((response) => {
-    //             setData(response.data.message);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
+    
     return (
         <>
-            <div className="col-12 bg-primary-subtle text-primary-emphasis vh-100  d-flex align-items-center justify-content-center">
-            <div className="row col-12">
-            <div className="col-2"></div>              
-            <div className="navbar navbar-expand-lg bg-body-tertiary col-8">
-                <ul className="nav nav-tabs">
-                    <li className="nav-item">
-                        <a className="nav-link" aria-current="page" href="/course-report">Course Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/staff-report">School Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/staff-report">Faculty Staff Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/student-report">Student Report</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link active" href="/register">Enroll Student</a>
-                    </li>
-                </ul>
-            </div> 
-            <div className="col-2"></div>        
+            <div className="row col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">
+                <div className="col-1"></div>              
+                    <div className="navbar navbar-expand-lg bg-body-tertiary col-10">
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul className="nav nav-tabs">
+                                <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" href={`/admin-dashboard/${userID}`}>Dashboard</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">School Report</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href={`/staff-report/${userID}`}>Faculty Staff Report</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href={`/student-report/${userID}`}>Student Report</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link active" href={`/register/${userID}`}>Register User</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> 
+                    <div className="col-1"></div>         
                 <div className="col-4"></div>
                 <div className="text-center col-4 border-bottom"> 
                 <h1>Create New User</h1>
@@ -84,7 +81,7 @@ export default function Register(){
                 <div className="col-4"></div>
                 <div className="col-4"></div>
                 <div className="col-4 p-3 position-flex top-0 start-50">
-                    <form className="row g-3" onSubmit={handleRegister} action="/">
+                    <form className="row g-3" onSubmit={handleRegister} action={`/admin-dashboard/${userID}`}>
                         <div className="row g-3 col-12">
                             <div className="col-md-12">
                                 <label htmlFor="inputName" className="form-label">Name</label>
@@ -164,7 +161,6 @@ export default function Register(){
                     </form>
                 </div>        
                 <div className="col-4"></div>
-            </div>
             </div>
         </>
     );

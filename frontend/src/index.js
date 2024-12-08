@@ -65,51 +65,51 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/course-report",
+    path: "/course-report/:id",
     element: <User />,
     children: [
       {
-        path: "/course-report",
+        path: "/course-report/:id",
         element: <CourseReport />,
       },
     ],
   },
   {
-    path: "/create-course",
+    path: "/create-course/:id",
     element: <User />,
     children: [
       {
-        path: "/create-course",
+        path: "/create-course/:id",
         element: <CourseForm />,
       },
     ],
   },
   {
-    path: "/update-course",
+    path: "/update-course/:id",
     element: <User />,
     children: [
       {
-        path: "/update-course",
+        path: "/update-course/:id",
         element: <CourseForm />,
       },
     ],
   },
   {
-    path: "/staff-report",
+    path: "/staff-report/:id",
     element: <User />,
     children: [
       {
-        path: "/staff-report",
+        path: "/staff-report/:id",
         element: <StaffReport />,
       },
     ],
   },
   {
-    path: "/student-report",
+    path: "/student-report/:id",
     element: <User />,
     children: [
       {
-        path: "/student-report",
+        path: "/student-report/:id",
         element: <StudentReport />,
       },
     ],
@@ -135,11 +135,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/register",
+    path: "/register/:id",
     element: <User />,
     children: [
       {
-        path: "/register",
+        path: "/register/:id",
         element: <Register />,
       },
     ],

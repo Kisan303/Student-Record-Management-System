@@ -9,7 +9,6 @@ function User() {
       <div className="col-12 bg-primary-subtle text-primary-emphasis vh-100">
         <Outlet />
       </div>
-      <Footer />
     </div>
   );
 }
