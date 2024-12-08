@@ -3,29 +3,41 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function AdminDashboard(){
     const [dataSet, setDataSet] = useState([]);
-    axios.get('http://127.0.0.1:5000/')
-        .then((responsenew)=>{
-            console.log(responsenew.data);
-            setDataSet(responsenew.data)
+    const params = useParams(); 
+    // axios.post('http://127.0.0.1:5000/',{'id': params.id})
+    // .then((response) => {
+    //     console.log(response);
+    //     axios.get('http://127.0.0.1:5000/')
+    //         .then((responsenew)=>{
+    //             const userData = responsenew.data;
+    //             console.log(userData);
+    //             setDataSet(userData);
+    //         })
+    //         .catch((error1)=>{
+    //             console.error('Error fetching data:', error1);
+    //         });
+    // })
+    // .catch((error) => {
+    //     console.error('Error fetching data:', error);
+    // });    
+
+    axios.get(`http://127.0.0.1:5000/${params.id.toString()}`)
+        .then((response)=>{
+            const userItems = response.data.items;   
+            const userData = response.data;
+            console.log(userItems);
+            setDataSet(userData);
         })
         .catch((error1)=>{
             console.error('Error fetching data:', error1);
-        });
-    useEffect(() => {    
-        axios.get('http://127.0.0.1:5000/')
-            .then((responsenew)=>{
-                console.log(responsenew.data.items);
-                setDataSet(responsenew.data.items)
-            })
-            .catch((error1)=>{
-                console.error('Error fetching data:', error1);
-        });
     });
+    // useEffect(() => {    
+    // });
     return(
         <>
         <div className="col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">
         <div className="row col-12">
-            <div className="col-1"><p>Result: {dataSet}</p></div>
+            <div className="col-1"><p>Result: {dataSet.firstname}</p></div>
             <div className="navbar navbar-expand-lg bg-body-tertiary col-10">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

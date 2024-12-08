@@ -7,7 +7,7 @@ export default function Login(){
     const [userDashboard, setuserDashboard] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(null);
-    const [datas, setDatas] = useState(null);
+    const [datas, setDatas] = useState([]);
     const [responseMessage, setResponseMessage] = useState(null);
     const url = window.location.href;    
     const navigate = useNavigate();
@@ -19,18 +19,19 @@ export default function Login(){
     }, []);
 
     function handleLogin(){
-        axios.post('http://127.0.0.1:5000/users',{'email':email})
+        axios.post('http://127.0.0.1:5000/login',{'email': email, 'password': password})
             .then((response) => {
-                setDatas(response.data);
                 console.log(response);
-                axios.get('http://127.0.0.1:5000/')
+                axios.get('http://127.0.0.1:5000/login')
                     .then((responsenew)=>{
                         console.log(responsenew.data);
+                        setDatas(responsenew.data);
+                        console.log(datas._id)
+                        navigate(`http://localhost:3000/admin-dashboard/${datas._id.toString()}`);
                     })
                     .catch((error1)=>{
                         console.error('Error fetching data:', error1);
                     });
-                navigate("/admin-dashboard");
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -38,7 +39,7 @@ export default function Login(){
     };
 
     function toggleUserDashboard() {
-        if (url.includes("admin-login")) setuserDashboard("admin-dashboard");
+        if (url.includes("admin-login")) setuserDashboard("http://localhost:3000/admin-dashboard/67553159884e60348aaf39f0");
         if (url.includes("staff-login")) setuserDashboard("staff-dashboard");
         if (url.includes("student-login")) setuserDashboard("student-dashboard");
     }
@@ -71,7 +72,7 @@ export default function Login(){
                                 <input type="password" className="form-control" id="inputPassword3" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                 </div>
                             </div>
-                            <div className="row mb-3">
+                            <div className="row mb-3 d-none">
                                 <div className="col-sm-10 offset-sm-2 text-start">
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" id="gridCheck1"/>
