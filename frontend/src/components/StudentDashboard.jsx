@@ -1,15 +1,36 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 export default function StudentDashboard(){
+    const [dataSet, setDataSet] = useState([]);
+    const params = useParams(); 
+
+    useEffect(() => {    
+        displayDashboard();
+    });   
+    async function displayDashboard() { 
+        try{
+            await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setDataSet(promisedata))
+            .catch(error => console.error("Error:", error));
+            console.log("Able to fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    };
     return(
         <>        
         <div className="row col-12 bg-primary-subtle text-primary-emphasis p-5">
             <div className="col-2"></div>
             <div className="col-8 p-1 text-start">
                 <ul className="list-group list-group">
-                <li className="list-group-item">Student Name: Ralph Eimerson Ompoc</li>
-                <li className="list-group-item">Student ID: c0921675</li>
-                <li className="list-group-item">Program: Full Stack Software Development</li>
-                <li className="list-group-item">Year: 2nd</li>
-                <li className="list-group-item">Term: 3</li>
+                    <li className="list-group-item">Student Name: {dataSet.firstname} {dataSet.lastname}</li>
+                    <li className="list-group-item">Student E-mail: {dataSet.email}</li>
+                    <li className="list-group-item">Role: {dataSet.role}</li>
                 </ul>      
             </div>
             <div className="col-2"></div>

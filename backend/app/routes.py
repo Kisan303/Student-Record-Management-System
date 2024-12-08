@@ -44,6 +44,13 @@ def home(user_id):
     user = users_collection.find_one({"_id": ObjectId(str(user_id))})
     return json.dumps(user, default=str)
 
+@flask_app.route("/register", methods=['POST'])
+def register():
+    register_user = request.get_json()
+    users_collection.insert_one(register_user)
+    print(register_user)
+    return json.dumps({"message": "Successfully registered!"}, default=str), 200
+
 @flask_app.route("/login", methods=['GET','POST'])
 def login():
     data = request.get_json()

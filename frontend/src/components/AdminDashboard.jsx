@@ -1,26 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+
 export default function AdminDashboard(){
     const [dataSet, setDataSet] = useState([]);
     const params = useParams(); 
-    // axios.post('http://127.0.0.1:5000/',{'id': params.id})
-    // .then((response) => {
-    //     console.log(response);
-    //     axios.get('http://127.0.0.1:5000/')
-    //         .then((responsenew)=>{
-    //             const userData = responsenew.data;
-    //             console.log(userData);
-    //             setDataSet(userData);
-    //         })
-    //         .catch((error1)=>{
-    //             console.error('Error fetching data:', error1);
-    //         });
-    // })
-    // .catch((error) => {
-    //     console.error('Error fetching data:', error);
-    // }); 
-    
+
     useEffect(() => {    
         displayDashboard();
     });   
@@ -38,17 +22,6 @@ export default function AdminDashboard(){
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
-    // {
-    //     axios.get(`http://127.0.0.1:5000/${params.id.toString()}`)
-    //         .then((response)=>{
-    //             const userItems = response.data.items;   
-    //             const userData = response.data;
-    //             console.log(userItems);
-    //             setDataSet(userData);
-    //         })
-    //         .catch((error1)=>{
-    //             console.error('Error fetching data:', error1);
-    //     });
     };
     return(
         <>
@@ -70,12 +43,12 @@ export default function AdminDashboard(){
                 </div>
             </div>
             </div> 
-            <div className="col-1"></div> 
+            <div className="col-1"></div>   
 
             <div className="col-1"></div>
             <div className="col-10 p-1 text-start">
                 <ul className="list-group list-group">
-                <li className="list-group-item">Professor Name: {dataSet.firstname} {dataSet.lastname}</li>
+                <li className="list-group-item">Admin Name: {dataSet.firstname} {dataSet.lastname}</li>
                 <li className="list-group-item">Faculty E-mail: {dataSet.email}</li>
                 <li className="list-group-item">Role: {dataSet.role}</li>
                 </ul>      

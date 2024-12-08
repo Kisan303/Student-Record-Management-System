@@ -20,6 +20,9 @@ export default function StaffReport(){
                     <li className="nav-item">
                         <a className="nav-link" href="/student-report">Student Report</a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/register">Onboard Teacher</a>
+                    </li>
                 </ul>
             </div> 
             <div className="col-2"></div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function Login(){
     const [title, setTitle] = useState("");
@@ -19,10 +18,6 @@ export default function Login(){
         username: "",
     });
     const [userDashboard, setuserDashboard] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    const [datas, setDatas] = useState([]);
-    const [responseMessage, setResponseMessage] = useState("");
     const url = window.location.href;    
     const navigate = useNavigate();
 
@@ -37,7 +32,7 @@ export default function Login(){
         const user = { ...formUser };
         try{
             let response;
-            let userid;
+            let userdata;
             response = await fetch('http://127.0.0.1:5000/login', {
                     method: "POST",
                     headers: {
@@ -45,10 +40,6 @@ export default function Login(){
                     },
                     body: JSON.stringify(user),
                   });
-            //const record = response.json();
-            //setFetchUser(record);
-            //console.log(record);
-            //console.log(fetchUser._id.toString());
             if(response.ok) {
                 await fetch('http://127.0.0.1:5000/login', {
                     method: "POST",
@@ -57,41 +48,17 @@ export default function Login(){
                     },
                     body: JSON.stringify(user),
                 }).then(data => data.json())
-                .then(promisedata => userid = promisedata._id)
+                .then(promisedata => userdata = promisedata)
                 .catch(error => console.error("Error:", error));
-                //xsetuserDashboard("/admin-dashboard/"+userid);
-                console.log("Success Fetch!" + userid);
-                navigate(`/admin-dashboard/${userid}`);
+                console.log("Success Fetch!" + userdata._id);
+                if("admin" === userdata.role) navigate(`/admin-dashboard/${userdata._id}`);
+                if("teacher" === userdata.role) navigate(`/staff-dashboard/${userdata._id}`);
+                if("student" === userdata.role) navigate(`/student-dashboard/${userdata._id}`);
             };
             if(!response.ok) console.log("Fail Fetch!");
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
-        //console.log("Handle login.");
-        // axios.post('http://127.0.0.1:5000/login',{'email': email, 'password': password})
-        //     .then((response) => {
-        //         console.log("Post user infor!" + response)
-        //         // axios.get(`http://127.0.0.1:5000/login`)
-        //         //     .then((responsenew)=>{
-        //         //         console.log("Get user infor!")
-        //         //         const userItems = responsenew.data.items;   
-        //         //         const userData = responsenew.data;
-        //         //         console.log(userData._id);
-        //         //         setDatas(userData);
-        //         //     })
-        //         //     .catch((error1)=>{
-        //         //         console.error('Error fetching data:', error1);
-        //         // });
-        //         //setuserDashboard("/admin-dashboard/"+datas._id);
-        //         // const userInfo = response.data;
-        //         // setDatas(userInfo);
-        //         // console.log(userInfo.toString());
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error fetching data:', error);
-        //     });
-        console.log("Redirect to Dashboard!")
-        //setuserDashboard("/admin-dashboard/"+datas._id);
     };
     function updateForm(value) {
         return setFormUser((prev) => {
@@ -113,9 +80,6 @@ export default function Login(){
                     <div className="col-4"></div>
                     <div className="text-center col-4 border-bottom"> 
                         <h1>{title}</h1>
-                        <h3>Input: {formUser.email}</h3>
-                        <h5>Response: {datas}</h5>
-                        <h6>{responseMessage}</h6>
                     </div>
                     <div className="col-4"></div>
                     <div className="col-4"></div>
@@ -143,8 +107,8 @@ export default function Login(){
                                 </div>
                                 </div>
                             </div>                              
-                            <button type="submit">LOGIN</button>
-                            <a href={userDashboard} className="btn btn-primary" onClick={toggleUserDashboard}>Log in</a>
+                            <button className="btn btn-primary" type="submit">LOGIN</button>
+                            <a href={userDashboard} className="btn btn-primary d-none" onClick={toggleUserDashboard}>Log in</a>
                         </form>
                         <div>
                             <a href="register" className="btn btn-primary">Register new account</a>
