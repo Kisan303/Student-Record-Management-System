@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Teacher</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Update Teacher Information</h2>
+        <form action="{{ url_for('admin_routes.update_teacher', teacher_id=teacher['_id']) }}" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ teacher.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{ teacher.dob }}" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ teacher.address }}" required>
+            </div>
+
+              <!-- Course Dropdown for Teacher -->
+              <div class="form-group">
+                <label for="course" class="form-label">Course</label>
+                <select class="form-control" id="course" name="course" required>
+                    <option value="" disabled>Select Course</option> <!-- Default Option -->
+                    <option value="Full-Stack Software Development" {% if teacher.course == "Full-Stack Software Development" %}selected{% endif %}>Full-Stack Software Development</option>
+                    <option value="International Business Accounting" {% if teacher.course == "International Business Accounting" %}selected{% endif %}>International Business Accounting</option>
+                    <option value="International Hotel Business Management" {% if teacher.course == "International Hotel Business Management" %}selected{% endif %}>International Hotel Business Management</option>
+                    <option value="Cloud Infrastructure" {% if teacher.course == "Cloud Infrastructure" %}selected{% endif %}>Cloud Infrastructure</option>
+                    <option value="Nursing" {% if teacher.course == "Nursing" %}selected{% endif %}>Nursing</option>
+                    <option value="Mobile Application Development" {% if teacher.course == "Mobile Application Development" %}selected{% endif %}>Mobile Application Development</option>
+                    <option value="Big Data Analysis" {% if teacher.course == "Big Data Analysis" %}selected{% endif %}>Big Data Analysis</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{ teacher.phone }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ teacher.email }}" required>
+            </div>
+
+          
+            <button type="submit" class="btn btn-primary">Update Teacher</button>
+        </form>
+        <a href="{{ url_for('admin_routes.manage_teachers') }}" class="btn btn-secondary mt-3">Back to Manage Teachers</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

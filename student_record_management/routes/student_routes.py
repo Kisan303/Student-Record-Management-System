@@ -1,91 +1,90 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request, Response
-from flask_login import login_required, current_user
-from models import Grade, Class, Teacher, Notification, Attendance  # Absolute import
-from forms import UpdateProfileForm
-from sqlalchemy import or_
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from extensions import mongo  # Import mongo from extensions.py
+from bson.objectid import ObjectId  # Import ObjectId
+import bcrypt  # For password hashing
 
-student_bp = Blueprint('student', __name__, url_prefix='/student')
+student_routes = Blueprint('student_routes', __name__)
 
-# Student Dashboard
-@student_bp.route('/')
-@login_required
-def dashboard():
-    # Import db locally to avoid circular import
-    from app import db  
-    
-    student_classes = Class.query.join(Grade).filter(Grade.student_id == current_user.id).all()
-    grades = Grade.query.filter_by(student_id=current_user.id).all()
-    teachers = Teacher.query.join(Class).filter(Class.student_id == current_user.id).all()
-    notifications = Notification.query.filter_by(user_id=current_user.id).all()
+# Student registration route
+@student_routes.route('/student_register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Retrieve form data
+        name = request.form['name']
+        dob = request.form['dob']
+        address = request.form['address']
+        course = request.form['course']
+        gender = request.form['gender']
+        phone = request.form['phone']
+        email = request.form['email']
+        password = request.form['password']
 
-    return render_template('student/dashboard.html', 
-                           student_classes=student_classes, 
-                           grades=grades, 
-                           teachers=teachers,
-                           notifications=notifications)
+        # Check if email already exists
+        existing_student = mongo.db.students.find_one({"email": email})
+        if existing_student:
+            flash("Email already exists. Please use a different email.", "danger")
+            return redirect(url_for('student_routes.register'))
 
-# View Personal Information
-@student_bp.route('/profile')
-@login_required
-def profile():
-    student = current_user
-    return render_template('student/profile.html', student=student)
+        # Hash the password using bcrypt
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-# Update Personal Information
-@student_bp.route('/update_profile', methods=['GET', 'POST'])
-@login_required
-def update_profile():
-    form = UpdateProfileForm()
-    if form.validate_on_submit():
-        current_user.address = form.address.data
-        current_user.phone_number = form.phone_number.data
-        current_user.save() 
-        flash('Profile updated successfully!', 'success')
-        return redirect(url_for('student.profile'))
-    return render_template('student/update_profile.html', form=form)
+        # Create the student data
+        student_data = {
+            "name": name,
+            "dob": dob,
+            "address": address,
+            "course": course,
+            "gender": gender,
+            "phone": phone,
+            "email": email,
+            "password": hashed_password  # Store hashed password
+        }
 
-# View Grades
-@student_bp.route('/grades')
-@login_required
-def view_grades():
-    # Import db locally to avoid circular import
-    from app import db  
-    grades = Grade.query.filter_by(student_id=current_user.id).all()
-    return render_template('student/grades.html', grades=grades)
+        # Insert into the database
+        mongo.db.students.insert_one(student_data)
+        flash("Registration successful! Please log in.", "success")
+        return redirect(url_for('student_routes.login'))
 
-# Search for Grades
-@student_bp.route('/grades/search')
-@login_required
-def search_grades():
-    query = request.args.get('query')
-    grades = Grade.query.filter(Grade.subject.like(f'%{query}%')).all()
-    return render_template('student/grades.html', grades=grades)
+    return render_template('student/student_register.html')
 
-# Export Grades to CSV
-@student_bp.route('/grades/export')
-@login_required
-def export_grades():
-    # Import db locally to avoid circular import
-    from app import db  
 
-    grades = Grade.query.filter_by(student_id=current_user.id).all()
-    grades_data = [['Subject', 'Grade']]
+# Student login route
+@student_routes.route('/student_login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
-    for grade in grades:
-        grades_data.append([grade.subject, grade.grade])
+        # Find the student by email
+        student = mongo.db.students.find_one({"email": email})
+        if student and bcrypt.checkpw(password.encode('utf-8'), student['password'].encode('utf-8')):
+            # Store student's ID in session
+            session['student_id'] = str(student['_id'])
+            flash("Login successful!", "success")
+            return redirect(url_for('student_routes.student_dashboard'))
 
-    def generate():
-        for row in grades_data:
-            yield ','.join(row) + '\n'
+        flash("Invalid email or password. Please try again.", "danger")
+    return render_template('student/student_login.html')
 
-    return Response(generate(), mimetype='text/csv', headers={'Content-Disposition': 'attachment; filename=grades.csv'})
 
-# Attendance Tracking
-@student_bp.route('/attendance')
-@login_required
-def view_attendance():
-    # Import db locally to avoid circular import
-    from app import db  
+# Student dashboard route
+@student_routes.route('/student_dashboard')
+def student_dashboard():
+    if 'student_id' not in session:
+        flash("Please log in first.", "warning")
+        return redirect(url_for('student_routes.login'))
 
-    attendance = Attendance.query.filter_by(student_id=current_user.id).all()
-    return render_template('student/attendance.html', attendance=attendance)
+    student = mongo.db.students.find_one({"_id": ObjectId(session['student_id'])})
+    if not student:
+        flash("Student not found.", "danger")
+        return redirect(url_for('student_routes.login'))
+
+    return render_template('student/student_dashboard.html', student=student)
+
+
+# Student logout route
+@student_routes.route('/student_logout')
+def logout():
+    session.pop('student_id', None)
+    flash("You have been logged out.", "info")
+    return redirect(url_for('student_routes.login'))
