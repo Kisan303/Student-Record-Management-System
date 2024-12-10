@@ -1,26 +1,36 @@
 from flask import Flask
 from flask_pymongo import PyMongo
 import bcrypt
+from config import Config
 
 # Setup Flask and MongoDB
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://root:ZOKW1BKK0MwcEN9H@cluster0.onoha.mongodb.net/student_db?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = Config.MONGO_URI
 mongo = PyMongo(app)
 
-# Admin credentials
-username = "admin"
-password = "admin123"  # Plaintext password
+def create_admin():
+    # Load admin credentials from Config
+    username = Config.ADMIN_USERNAME
+    password = Config.ADMIN_PASSWORD
 
-# Hash the password using bcrypt
-hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    # Check if admin already exists
+    if mongo.db.admins.find_one({"username": username}):
+        print("Admin user already exists!")
+        return
 
-# Prepare admin data
-admin_data = {
-    "username": username,
-    "password": hashed_password.decode('utf-8')  # Store the hashed password as a string
-}
+    # Hash the password using bcrypt
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-# Insert the admin data into the 'admins' collection
-mongo.db.admins.insert_one(admin_data)
+    # Prepare admin data
+    admin_data = {
+        "username": username,
+        "password": hashed_password.decode('utf-8')  # Store the hashed password as a string
+    }
 
-print("Admin created successfully with username 'admin' and password 'admin123'!")
+    # Insert the admin data into the 'admins' collection
+    mongo.db.admins.insert_one(admin_data)
+    print("Admin created successfully with username '{}'!".format(username))
+
+if __name__ == "__main__":
+    with app.app_context():
+        create_admin()
