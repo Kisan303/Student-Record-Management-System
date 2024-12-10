@@ -52,9 +52,19 @@ classRecord_collection = db["record"]
 def get_user(user_id):
     #data = request.get_json()
     #user_id = id
-    print(user_id)
+    # print(user_id)
     user = users_collection.find_one({"_id": ObjectId(str(user_id))})
-    return json.dumps(user, default=str)
+    print(user)
+    return json.dumps(user, default=str), 200
+
+@flask_app.route("/delete_user/<string:email>", methods=['DELETE'])
+def delete_user(email):
+    #data = request.get_json()
+    #user_id = id
+    # print(user_id)
+    user = users_collection.delete_one({"email": str(email)})
+    print(user)
+    return json.dumps(user, default=str), 200
 
 @flask_app.route("/get_class", methods=['GET'])
 def get_class():
@@ -89,7 +99,12 @@ def get_all_users():
 @flask_app.route("/get_record", methods=['GET'])
 def get_record():
     try:
-        records = list(classRecord_collection.find({}, {"_id": 0}))
+        documents = classRecord_collection.find()
+        records =[]
+        for document in documents:
+            document["_id"] = str(document["_id"])
+            records.append(document)
+        #records = list(classRecord_collection.find({}, {"_id": 0}))
         print(records)
         return jsonify(records), 200
     except Exception as e:

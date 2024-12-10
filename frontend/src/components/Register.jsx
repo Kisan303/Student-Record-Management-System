@@ -16,10 +16,12 @@ export default function Register(){
         address:"",
         dob:"",
         gender:"",
+        department:"",
+        program:"",
     });
     useEffect(() => {  
         setUserID(params.id.toString());
-    });   
+    }, [1]);   
     async function handleRegister(e){
         e.preventDefault();
         const registerUser = { ...formUser };
@@ -111,6 +113,22 @@ export default function Register(){
                             <option value="" selected>Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div className="col-md-12">  
+                            <label htmlFor="inputDepartment" className="form-label">Department</label>
+                            <select id="inputDepartment" className="form-select" value={formUser.department} onChange={(e) => updateForm({ department: e.target.value})} required>
+                            <option value="" selected>Select Department</option>
+                            <option value="computer studies">Computer Studies</option>
+                            <option value="business management">Business Management</option>
+                            </select>
+                        </div>
+                        <div className="col-md-12">  
+                            <label htmlFor="inputProgram" className="form-label">Program Course</label>
+                            <select id="inputProgram" className="form-select" value={formUser.program} onChange={(e) => updateForm({ program: e.target.value})} required>
+                            <option value="" selected>Select Department</option>
+                            <option value="Full Stack Software Development">Full Stack Software Development</option>
+                            <option value="International Business Management">International Business Management</option>
                             </select>
                         </div>
                         <div className="col-md-12">

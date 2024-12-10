@@ -7,11 +7,13 @@ export default function StaffReport(){
     const [userID, setUserID] = useState("");
     const params = useParams(); 
     const [listOfTeachers, setListOfTeachers] = useState([]); 
+    const [selectID, setSelectID] = useState("");
     const navigate = useNavigate();
     useEffect(() => {  
         setUserID(params.id.toString());
         displayListOfTeachers();
-    });      
+        deleteTeacherAccount();
+    }, [1]);      
     async function displayListOfTeachers() { 
         try{
             await fetch(`http://127.0.0.1:5000/get_all_users`, {
@@ -23,6 +25,16 @@ export default function StaffReport(){
             .then(promisedata => setListOfTeachers(promisedata))
             .catch(error => console.error("Error:", error));
             console.log("Able to fetch all users!");            
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    };     
+    async function deleteTeacherAccount(email) { 
+        try{
+            await fetch(`http://127.0.0.1:5000/delete_user/${email}`, {
+                method: "DELETE",
+            });
+            console.log("Able to delete user account!");            
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
@@ -77,15 +89,15 @@ export default function StaffReport(){
                         <div className="accordion-item">
                             <h2 className="accordion-header">
                             <button className="accordion-button bg-body-tertiary" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse_"+index.toString()} aria-expanded="false" aria-controls={"collapse_"+index.toString()}>
-                                Prof. {teacher.firstname} {teacher.lastname} 
+                                Prof. {teacher.firstname} {teacher.lastname} {selectID}
                             </button>
                             </h2>
                             <div id={"collapse_"+index.toString()} className="accordion-collapse collapse bg-body-tertiary" data-bs-parent="#accordionExample">
                             <div className="accordion-body">                        
-                                <StaffDashboard id={teacher._id}/>                                
+                                <StaffDashboard id={teacher._id.toString()}/>                                
                                 <div className="row">
-                                    <div className="col-6"><a className="nav-link active" href="#">Update</a></div>
-                                    <div className="col-6"><a className="nav-link active" href="#">Delete</a></div>
+                                    <div className="col-6"><a className="nav-link active d-none" href="#">Update</a></div>
+                                    <div className="col-6"><button onClick={() => deleteTeacherAccount(teacher.email)}>Delete</button></div>
                                 </div>
                             </div>
                             </div>

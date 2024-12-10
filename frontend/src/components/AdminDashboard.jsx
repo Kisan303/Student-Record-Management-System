@@ -12,7 +12,7 @@ export default function AdminDashboard(){
         setUserID(params.id.toString());
         displayDashboard();
         displayListOfUsers();
-    });   
+    }, [1]);   
     async function displayDashboard () {
         try{
             await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {

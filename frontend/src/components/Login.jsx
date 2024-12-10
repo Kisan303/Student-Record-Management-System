@@ -25,7 +25,7 @@ export default function Login(){
         if (url.includes("admin-login")) setTitle("Admin");
         if (url.includes("staff-login")) setTitle("Faculty Staff");
         if (url.includes("student-login")) setTitle("Student");
-    }, []);
+    }, [1]);
 
     async function handleLogin(e){
         e.preventDefault();

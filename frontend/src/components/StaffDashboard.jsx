@@ -2,61 +2,105 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 export default function  StaffDashboard({id}){
     const [teacher, setTeacher] = useState([]);
+    const [student, setStudent] = useState([]);
     const [records, setRecords] = useState([]);
     const [classes, setClasses] = useState([]);
     const [teacherID, setTeacherID] = useState("");
-    const params = useParams(); 
+    const params = useParams();  
 
-    useEffect(() => {    
+    useEffect(() => {
+        // const userID = params.id.toString();
+        if(id == null){setTeacherID(params.id.toString())}
+        else{setTeacherID(id)};  
+        // async function fetchData(){
+        //     const [t, r] = await Promise.all([
+        //         fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+        //             method: "GET",
+        //             headers: {
+        //             "Content-Type": "application/json",
+        //             },
+        //         }).then(data => data.json())
+        //         .then(promisedata => setTeacher(promisedata))
+        //         .catch(error => console.error("Error:", error)),
+        //         fetch(`http://127.0.0.1:5000/get_record`, {
+        //             method: "GET",
+        //             headers: {
+        //             "Content-Type": "application/json",
+        //             },
+        //         }).then(data => data.json())
+        //         .then(promisedata => setRecords(promisedata))
+        //         .catch(error => console.error("Error:", error))
+        //     ]);
+        // };
+        // fetchData(); 
+        async function displayDashboard() { 
+            try{
+                await fetch(`http://127.0.0.1:5000/${teacherID}`, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                }).then(data => data.json())
+                .then(promisedata => setTeacher(promisedata))
+                .catch(error => console.error("Error:", error));
+                console.log(teacher);
+            }catch(error){
+                console.error('A problem occurred with your fetch operation: ', error);
+            }
+        }; 
+        async function displayRecords(){ 
+            try{
+                await fetch(`http://127.0.0.1:5000/get_record`, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                }).then(data => data.json())
+                .then(promisedata => setRecords(promisedata))
+                .catch(error => console.error("Error:", error));
+                console.log(records);
+                console.log("Made it here!");
+            }catch(error){
+                console.error('A problem occurred with your fetch operation: ', error);
+            }
+        }; 
+        async function displayClasses() { 
+            try{
+                await fetch(`http://127.0.0.1:5000/get_class`, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                }).then(data => data.json())
+                .then(promisedata => setClasses(promisedata))
+                .catch(error => console.error("Error:", error));
+                console.log(classes);
+            }catch(error){
+                console.error('A problem occurred with your fetch operation: ', error);
+            }
+        };
+        async function getStudent() { 
+            try{
+                await fetch(`http://127.0.0.1:5000/get_all_users`, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                }).then(data => data.json())
+                .then(promisedata => setStudent(promisedata))
+                .catch(error => console.error("Error:", error));
+                return (
+                    <td>{student.fistname} {student.lastname}</td>
+                );
+            }catch(error){
+                console.error('A problem occurred with your fetch operation: ', error);
+            }
+        }; 
         displayDashboard();
-        displayRecords();
+        displayRecords();  
         displayClasses();
-        if(id == ""){setTeacherID(params.id.toString())}
-        else{setTeacherID(id)};
-    });   
-    async function displayDashboard() { 
-        try{
-            await fetch(`http://127.0.0.1:5000/${teacherID}`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                },
-            }).then(data => data.json())
-            .then(promisedata => setTeacher(promisedata))
-            .catch(error => console.error("Error:", error));
-        }catch(error){
-            console.error('A problem occurred with your fetch operation: ', error);
-        }
-    };  
-    async function displayRecords() { 
-        try{
-            await fetch(`http://127.0.0.1:5000/get_record`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                },
-            }).then(data => data.json())
-            .then(promisedata => setRecords(promisedata))
-            .catch(error => console.error("Error:", error));
-        }catch(error){
-            console.error('A problem occurred with your fetch operation: ', error);
-        }
-    }; 
-    async function displayClasses() { 
-        try{
-            await fetch(`http://127.0.0.1:5000/get_class`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                },
-            }).then(data => data.json())
-            .then(promisedata => setClasses(promisedata))
-            .catch(error => console.error("Error:", error));
-            console.log(classes);
-        }catch(error){
-            console.error('A problem occurred with your fetch operation: ', error);
-        }
-    };
+        getStudent();
+    });
     return(
         <>
         <div className="row col-12 bg-primary-subtle text-primary-emphasis p-5  d-flex align-items-center justify-content-center">
@@ -86,15 +130,15 @@ export default function  StaffDashboard({id}){
                     </tr>
                 </thead>
                 <tbody>
-                    {records.filter(r => r.teacher_id === params.id.toString()).map((record, index) => (
+                    {records.filter(r => r.teacher_id === teacherID).map((record, index) => (
                         <tr className="text-start">
                             <th scope="row" className="text-center">{index+1}</th>
-                            <td>{classes.filter(c => c._id.toString() === record.section_id)[0].course_code}-{classes.filter(c => c._id.toString() === record.section_id)[0].section}:{classes.filter(c => c._id.toString() === record.section_id)[0].course_name}</td>
-                            <td>{record.student_id}</td>
+                            <td>{classes.filter(c => c._id.toString() === record.section_id)[0].course_code}-{classes.filter(c => c._id.toString() === record.section_id)[0].section}:{classes.filter(c => c._id.toString() === record.section_id)[0].course_name}</td>   
+                            {student.filter(s => s._id.toString() === record.student_id).map(u => <td>{u.firstname} {u.lastname}</td>)}
                             <td className="text-center">{record.grade}</td>
                         </tr>
                     ))} 
-                </tbody>
+                </tbody>    
                 </table>
             </div>  
             <div className="col-2 d-sm-none"></div>

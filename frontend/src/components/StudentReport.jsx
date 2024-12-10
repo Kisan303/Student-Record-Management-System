@@ -6,7 +6,7 @@ export default function StaffReport(){
     const params = useParams(); 
     useEffect(() => {  
         setUserID(params.id.toString());
-    }); 
+    }, [1]); 
     return(
         <>
         <div className="row col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">            
