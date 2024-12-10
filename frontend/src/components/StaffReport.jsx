@@ -82,7 +82,7 @@ export default function StaffReport(){
                             </h2>
                             <div id={"collapse_"+index.toString()} className="accordion-collapse collapse bg-body-tertiary" data-bs-parent="#accordionExample">
                             <div className="accordion-body">                        
-                                <StaffDashboard id="6755ef32e3d3fa95f412bcfb"/>                                
+                                <StaffDashboard id={teacher._id}/>                                
                                 <div className="row">
                                     <div className="col-6"><a className="nav-link active" href="#">Update</a></div>
                                     <div className="col-6"><a className="nav-link active" href="#">Delete</a></div>

@@ -75,7 +75,12 @@ def get_class():
 @flask_app.route("/get_all_users", methods=['GET'])
 def get_all_users():
     try:
-        users = list(users_collection.find({}, {"_id": 0}))
+        documents = users_collection.find()
+        users = []
+        for document in documents:
+            document["_id"] = str(document["_id"])
+            users.append(document)
+        #users = list(users_collection.find({}, {"_id": 0}))
         print(users)
         return jsonify(users), 200
     except Exception as e:

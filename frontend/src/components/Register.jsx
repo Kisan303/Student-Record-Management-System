@@ -15,6 +15,7 @@ export default function Register(){
         phone:"",
         address:"",
         dob:"",
+        gender:"",
     });
     useEffect(() => {  
         setUserID(params.id.toString());
@@ -91,16 +92,25 @@ export default function Register(){
                                 <input type="text" className="form-control" id="inputLastName" placeholder="Last Name" value={formUser.lastname} onChange={(e) => updateForm({ lastname: e.target.value})} required/>
                             </div>
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-4">
                             <label htmlFor="inputDateOfBirth" className="form-label">Date of Birth</label>
-                            <input type="date" className="form-control" id="inputDateOfBirth" value={formUser.dob} onChange={(e) => updateForm({ dob: e.target.value})}/>
+                            <input type="date" className="form-control" id="inputDateOfBirth" value={formUser.dob} onChange={(e) => updateForm({ dob: e.target.value})} required/>
                         </div>
                         <div className="col-md-4">  
                             <label htmlFor="inputRole" className="form-label">Role</label>
-                            <select id="inputRole" className="form-select" value={formUser.role} onChange={(e) => updateForm({ role: e.target.value})}>
-                            <option value="admin" selected>Admin</option>
+                            <select id="inputRole" className="form-select" value={formUser.role} onChange={(e) => updateForm({ role: e.target.value})} required>
+                            <option value="admin" selected>Select Role</option>
+                            <option value="admin">Admin</option>
                             <option value="teacher">Teacher</option>
                             <option value="student">Student</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">  
+                            <label htmlFor="inputGender" className="form-label">Gender</label>
+                            <select id="inputGender" className="form-select" value={formUser.gender} onChange={(e) => updateForm({ gender: e.target.value})} required>
+                            <option value="" selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                             </select>
                         </div>
                         <div className="col-md-12">
@@ -121,11 +131,11 @@ export default function Register(){
                         </div>
                         <div className="col-md-12">
                             <label htmlFor="inputPhone" className="form-label">Phone</label>
-                            <input type="tel" className="form-control" id="inputPhone" value={formUser.phone} onChange={(e) => updateForm({ phone: e.target.value})}/>
+                            <input type="tel" className="form-control" id="inputPhone" value={formUser.phone} onChange={(e) => updateForm({ phone: e.target.value})} required/>
                         </div>
                         <div className="col-12">
                             <label htmlFor="inputAddress" className="form-label">Address</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 London St, Sarnia, Ontario Canada" value={formUser.address} onChange={(e) => updateForm({ address: e.target.value})}/>
+                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 London St, Sarnia, Ontario Canada" value={formUser.address} onChange={(e) => updateForm({ address: e.target.value})} required/>
                         </div>
                         <div className="col-12 d-none">
                             <label htmlFor="inputAddress2" className="form-label">Address 2</label>
