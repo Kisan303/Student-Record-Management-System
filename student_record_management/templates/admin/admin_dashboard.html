@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Admin Dashboard</h2>
+        <p>Welcome to the Admin Dashboard!</p>
+        
+        <!-- Student Management Section -->
+        <h4 class="mt-4">Student Management</h4>
+        <a href="{{ url_for('admin_routes.add_student') }}" class="btn btn-success">Add Student</a>
+        <a href="{{ url_for('admin_routes.manage_students') }}" class="btn btn-info">Manage Students</a>
+        <a href="{{ url_for('admin_routes.generate_report') }}" class="btn btn-warning">Generate Student Report</a>
+
+        <!-- Teacher Management Section -->
+        <h4 class="mt-4">Teacher Management</h4>
+        <a href="{{ url_for('admin_routes.add_teacher') }}" class="btn btn-success">Add Teacher</a>
+        <a href="{{ url_for('admin_routes.manage_teachers') }}" class="btn btn-info">Manage Teachers</a>
+        <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-warning">Generate Teacher Report</a>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-4">
+        <a href="{{ url_for('admin_routes.logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</body>
+</html>

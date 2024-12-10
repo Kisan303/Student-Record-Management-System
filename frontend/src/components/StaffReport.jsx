@@ -41,13 +41,10 @@ export default function StaffReport(){
                             <a className="nav-link" aria-current="page" href={`/admin-dashboard/${userID}`}>Dashboard</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">School Report</a>
+                            <a className="nav-link active" href={`/staff-report/${userID}`}>Manage Teachers</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" href={`/staff-report/${userID}`}>Faculty Staff Report</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href={`/student-report/${userID}`}>Student Report</a>
+                            <a className="nav-link" href={`/student-report/${userID}`}>Manage Students</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href={`/register/${userID}`}>Register User</a>
@@ -61,8 +58,8 @@ export default function StaffReport(){
             <div className="col-8 p-1 text-start">
                 <ul className="list-group list-group">
                 <li className="list-group-item">Number of Employed Teachers: <b>{listOfTeachers.filter(t => t.role === "teacher").length}</b></li>
-                <li className="list-group-item">Number of Full-time Faculty Staff Employed - Fall Term 2024: <b>200</b></li>
-                <li className="list-group-item">Faculty to Student ratio: <b>5:50</b> </li>
+                <li className="list-group-item d-none">Number of Full-time Faculty Staff Employed - Fall Term 2024: <b>200</b></li>
+                <li className="list-group-item d-none">Faculty to Student ratio: <b>5:50</b> </li>
                 </ul>      
             </div>
             <div className="col-2"></div>
@@ -85,7 +82,11 @@ export default function StaffReport(){
                             </h2>
                             <div id={"collapse_"+index.toString()} className="accordion-collapse collapse bg-body-tertiary" data-bs-parent="#accordionExample">
                             <div className="accordion-body">                        
-                                <StaffDashboard />
+                                <StaffDashboard id="6755ef32e3d3fa95f412bcfb"/>                                
+                                <div className="row">
+                                    <div className="col-6"><a className="nav-link active" href="#">Update</a></div>
+                                    <div className="col-6"><a className="nav-link active" href="#">Delete</a></div>
+                                </div>
                             </div>
                             </div>
                         </div> 

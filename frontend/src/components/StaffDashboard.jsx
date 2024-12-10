@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-export default function  StaffDashboard(){
+export default function  StaffDashboard({id}){
     const [teacher, setTeacher] = useState([]);
     const [records, setRecords] = useState([]);
     const [classes, setClasses] = useState([]);
+    const [teacherID, setTeacherID] = useState("");
     const params = useParams(); 
 
     useEffect(() => {    
         displayDashboard();
         displayRecords();
         displayClasses();
+        if(id == ""){setTeacherID(params.id.toString())}
+        else{setTeacherID(id)};
     });   
     async function displayDashboard() { 
         try{
-            await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+            await fetch(`http://127.0.0.1:5000/${teacherID}`, {
                 method: "GET",
                 headers: {
                 "Content-Type": "application/json",

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="mt-5">Student Registration</h2>
+    
+    <form method="POST">
+        <!-- Student Name -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob" required>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" name="address" required></textarea>
+        </div>
+
+        <!-- Course Dropdown -->
+        <div class="form-group">
+            <label for="course">Course</label>
+            <select class="form-control" id="course" name="course" required>
+                <option value="Full-Stack Software Development">Full-Stack Software Development</option>
+                <option value="International Business Accounting">International Business Accounting</option>
+                <option value="International Hotel Business Management">International Hotel Business Management</option>
+                <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+                <option value="Nursing">Nursing</option>
+                <option value="Mobile Application Development">Mobile Application Development</option>
+                <option value="Big Data Analysis">Big Data Analysis</option>
+            </select>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <hr>
+    <a href="{{ url_for('student_routes.login') }}" class="btn btn-secondary">Already have an account? Login here</a>
+</div>
+
+</body>
+</html>

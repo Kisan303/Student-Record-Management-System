@@ -62,13 +62,10 @@ export default function Register(){
                                     <a className="nav-link" aria-current="page" href={`/admin-dashboard/${userID}`}>Dashboard</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">School Report</a>
+                                    <a className="nav-link" href={`/staff-report/${userID}`}>Manage Teachers</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={`/staff-report/${userID}`}>Faculty Staff Report</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href={`/student-report/${userID}`}>Student Report</a>
+                                    <a className="nav-link" href={`/student-report/${userID}`}>Manage Students</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link active" href={`/register/${userID}`}>Register User</a>

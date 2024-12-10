@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Teacher Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Teacher Report</h2>
+        
+        {% if teachers %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Department</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.name }}</td>
+                        <td>{{ teacher.dob }}</td>
+                        <td>{{ teacher.department }}</td>
+                        <td>{{ teacher.phone }}</td>
+                        <td>{{ teacher.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-info">Download Report</a>
+        {% else %}
+            <p>No teachers found.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('admin_routes.manage_teachers') }}" class="btn btn-secondary">Back to Manage Teachers</a>
+    </div>
+</body>
+</html>
