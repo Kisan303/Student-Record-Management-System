@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Teachers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Manage Teachers</h2>
+        <a href="{{ url_for('admin_routes.add_teacher') }}" class="btn btn-success mb-3">Add New Teacher</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Course</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.dob }}</td>
+                    <td>{{ teacher.department }}</td>
+                    <td>{{ teacher.email }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_routes.update_teacher', teacher_id=teacher._id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ url_for('admin_routes.delete_teacher', teacher_id=teacher._id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No teachers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-info mb-3">Download Report</a>
+        <a href="{{ url_for('admin_routes.admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</body>
+</html>
