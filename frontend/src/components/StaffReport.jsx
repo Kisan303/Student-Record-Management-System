@@ -75,15 +75,15 @@ export default function StaffReport(){
 
             <div className="col-2"></div>
             <div className="col-8 p-1">
-                <div className="accordion" id="accordionExample">
+                <div className="accordion bg-body-tertiary" id="accordionExample">
                     {listOfTeachers.filter(t => t.role === "teacher").map((teacher, index) => (
                         <div className="accordion-item">
                             <h2 className="accordion-header">
-                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse_"+index.toString()} aria-expanded="false" aria-controls={"collapse_"+index.toString()}>
+                            <button className="accordion-button bg-body-tertiary" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse_"+index.toString()} aria-expanded="false" aria-controls={"collapse_"+index.toString()}>
                                 Prof. {teacher.firstname} {teacher.lastname} 
                             </button>
                             </h2>
-                            <div id={"collapse_"+index.toString()} className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div id={"collapse_"+index.toString()} className="accordion-collapse collapse bg-body-tertiary" data-bs-parent="#accordionExample">
                             <div className="accordion-body">                        
                                 <StaffDashboard />
                             </div>

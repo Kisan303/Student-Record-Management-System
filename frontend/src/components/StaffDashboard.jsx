@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 export default function  StaffDashboard(){
-    const [dataSet, setDataSet] = useState([]);
+    const [teacher, setTeacher] = useState([]);
+    const [records, setRecords] = useState([]);
+    const [classes, setClasses] = useState([]);
     const params = useParams(); 
 
     useEffect(() => {    
         displayDashboard();
+        displayRecords();
+        displayClasses();
     });   
     async function displayDashboard() { 
         try{
@@ -15,9 +19,37 @@ export default function  StaffDashboard(){
                 "Content-Type": "application/json",
                 },
             }).then(data => data.json())
-            .then(promisedata => setDataSet(promisedata))
+            .then(promisedata => setTeacher(promisedata))
             .catch(error => console.error("Error:", error));
-            console.log("Able to fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    };  
+    async function displayRecords() { 
+        try{
+            await fetch(`http://127.0.0.1:5000/get_record`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setRecords(promisedata))
+            .catch(error => console.error("Error:", error));
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    }; 
+    async function displayClasses() { 
+        try{
+            await fetch(`http://127.0.0.1:5000/get_class`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setClasses(promisedata))
+            .catch(error => console.error("Error:", error));
+            console.log(classes);
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
@@ -28,15 +60,15 @@ export default function  StaffDashboard(){
             <div className="col-2 d-sm-none"></div>
             <div className="col-8 col-sm-12 p-1 text-start">
                 <ul className="list-group list-group">
-                <li className="list-group-item">Professor Name: {dataSet.firstname} {dataSet.lastname}</li>
-                <li className="list-group-item">Teacher E-mail: {dataSet.email}</li>
-                <li className="list-group-item">Role: {dataSet.role}</li>
+                    <li className="list-group-item">Professor Name: {teacher.firstname} {teacher.lastname}</li>
+                    <li className="list-group-item">Teacher E-mail: {teacher.email}</li>
+                    <li className="list-group-item">Role: {teacher.role}</li>
                 </ul>      
             </div>
             <div className="col-2 d-sm-none"></div>
             <div className="col-2 d-sm-none"></div>
             <div className="col-5 col-sm-12 p-1">
-                <h3>CSD-4553-01: Cloud Computing</h3>
+                <h3>Class Records</h3>
             </div>
             <div className="col-2 d-sm-none"></div>
             <div className="col-2 d-sm-none"></div>      
@@ -44,74 +76,26 @@ export default function  StaffDashboard(){
                 <table className="table table-striped">
                 <thead>
                     <tr className="text-center">
-                    <th scope="col">Student ID</th>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Grade</th>
-                    <th scope="col">Letter Grade</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Class Section</th>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Grade</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">C0921675</th>
-                    <td>Ralph Eimerson</td>
-                    <td className="text-center">3.9</td>
-                    <td className="text-center">A+</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">C0921345</th>
-                    <td>John Watson</td>
-                    <td className="text-center">4.0</td>
-                    <td className="text-center">A+</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">C0921643</th>
-                    <td>Jackie Chan</td>
-                    <td className="text-center">3.8</td>
-                    <td className="text-center">A+</td>
-                    </tr>
+                    {records.filter(r => r.teacher_id === params.id.toString()).map((record, index) => (
+                        <tr className="text-start">
+                            <th scope="row" className="text-center">{index+1}</th>
+                            <td>{classes.filter(c => c._id.toString() === record.section_id)[0].course_code}-{classes.filter(c => c._id.toString() === record.section_id)[0].section}:{classes.filter(c => c._id.toString() === record.section_id)[0].course_name}</td>
+                            <td>{record.student_id}</td>
+                            <td className="text-center">{record.grade}</td>
+                        </tr>
+                    ))} 
                 </tbody>
                 </table>
             </div>  
             <div className="col-2 d-sm-none"></div>
-            <div className="col-2 d-sm-none"></div>
-            <div className="col-5 col-sm-12 p-1">
-                <h3>CSD-3301-01: Full Stack JavaScript</h3>
-            </div>
-            <div className="col-2 d-sm-none"></div>
-            <div className="col-2 d-sm-none"></div>      
-            <div className="col-8 col-sm-12 p-1">
-                <table className="table table-striped">
-                <thead>
-                    <tr className="text-center">
-                    <th scope="col">Student ID</th>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Grade</th>
-                    <th scope="col">Letter Grade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">C0921675</th>
-                    <td>Ralph Eimerson</td>
-                    <td className="text-center">3.4</td>
-                    <td className="text-center">A-</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">C0921345</th>
-                    <td>John Watson</td>
-                    <td className="text-center">2.8</td>
-                    <td className="text-center">B+</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">C0921643</th>
-                    <td>Jackie Chan</td>
-                    <td className="text-center">3.6</td>
-                    <td className="text-center">A</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>  
-            <div className="col-2 d-sm-none"></div>
+            
             </div>
             <div className="bg-primary-subtle text-primary-emphasis">
             <div className="row col-12 d-sm-none">

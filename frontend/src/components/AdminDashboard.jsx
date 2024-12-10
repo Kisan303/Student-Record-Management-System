@@ -91,11 +91,18 @@ export default function AdminDashboard(){
                 <div className="col-1 d-none"></div>   
 
                 <div className="col-1"></div>
-                <div className="col-10 p-1 text-start">
+                <div className="col-5 p-0 text-start">
                     <ul className="list-group list-group">
-                    <li className="list-group-item">Admin Name: {dataSet.firstname} {dataSet.lastname}</li>
-                    <li className="list-group-item">Faculty E-mail: {dataSet.email}</li>
-                    <li className="list-group-item">Role: {dataSet.role}</li>
+                        <li className="list-group-item">Admin Name: {dataSet.firstname} {dataSet.lastname}</li>
+                        <li className="list-group-item">Faculty E-mail: {dataSet.email}</li>
+                        <li className="list-group-item">Role: {dataSet.role}</li>
+                    </ul>      
+                </div>
+                <div className="col-5 p-0 text-start">
+                    <ul className="list-group list-group">
+                        <li className="list-group-item">Total number of Admin(s): {listOfUsers.filter(a => a.role === "admin").length}</li>
+                        <li className="list-group-item">Total number of Teacher(s): {listOfUsers.filter(t => t.role === "teacher").length}</li>
+                        <li className="list-group-item">Total number of Student(s): {listOfUsers.filter(s => s.role === "student").length}</li>
                     </ul>      
                 </div>
                 <div className="col-1"></div>
@@ -123,10 +130,10 @@ export default function AdminDashboard(){
                 <div className="col-1 d-none"></div>            
                 <div className="col-1"></div>
                 <div className="col-10">
-                    <table className="table table-striped">
+                    <table className="table table-striped text-start">
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
+                            <th scope="col" className="text-center">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Username</th>

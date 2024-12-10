@@ -21,6 +21,8 @@ mongodb_client = MongoClient(f"mongodb+srv://{db_username}:{db_password}@cluster
 # To access database from the client
 db = mongodb_client["smrs_app"]
 users_collection = db["users"]
+classSection_collection = db["class"]
+classRecord_collection = db["record"]
 
 
 # Empty table
@@ -33,16 +35,42 @@ users_collection = db["users"]
 # mock_data = [{"role": "admin", "firstname": "Kisan", "lastname": "Rai", "username": "test_admin", "email": "test_admin@gmail.com", "password": "admin1234"},
 #              {"role": "teacher", "firstname": "Mahan", "lastname": "Timalsena", "username": "test_teacher", "email": "test_teacher@gmail.com",  "password": "teacher1234"},
 #              {"role": "student", "firstname": "Ralph", "lastname": "Ompoc", "username": "test_student", "email": "test_student@gmail.com",  "password": "student1234"}]
+# mock_section = [{"section": 1, "course_code": "CSD-3103", "course_name": "Full Stack Java Script"},
+#                {"section": 1, "course_code": "CSD-4303", "course_name": "Cloud Computing"}]
+# mock_record = [{"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755e852e3d3fa95f412bcf9", "grade": 3.2},
+#                {"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f0bec5e20a4282cce633", "grade": 3.6},
+#                {"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f87638d16dce2c95a62a", "grade": 3.9},
+#                {"section_id": "67563424aa3190014545e37d", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755e852e3d3fa95f412bcf9", "grade": 3.0},
+#                {"section_id": "67563424aa3190014545e37d", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f0bec5e20a4282cce633", "grade": 2.8},
+#                {"section_id": "67563424aa3190014545e37d", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f87638d16dce2c95a62a", "grade": 3.1}]
 
 # users_collection.insert_many(mock_data)
+# classSection_collection.insert_many(mock_section)
+# classRecord_collection.insert_many(mock_record)
 
 @flask_app.route("/<string:user_id>", methods=['GET'])
-def home(user_id):
+def get_user(user_id):
     #data = request.get_json()
     #user_id = id
     print(user_id)
     user = users_collection.find_one({"_id": ObjectId(str(user_id))})
     return json.dumps(user, default=str)
+
+@flask_app.route("/get_class", methods=['GET'])
+def get_class():
+    try:
+        documents = classSection_collection.find()
+        # Convert the cursor to a list of dictionaries
+        classes = []
+        for document in documents:
+            # Convert _id to string to make it JSON serializable
+            document["_id"] = str(document["_id"])
+            classes.append(document)
+        #classes = list(classSection_collection.find({}, {"_id": "_id"}))
+        print(classes)
+        return jsonify(classes), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @flask_app.route("/get_all_users", methods=['GET'])
 def get_all_users():
@@ -50,6 +78,15 @@ def get_all_users():
         users = list(users_collection.find({}, {"_id": 0}))
         print(users)
         return jsonify(users), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@flask_app.route("/get_record", methods=['GET'])
+def get_record():
+    try:
+        records = list(classRecord_collection.find({}, {"_id": 0}))
+        print(records)
+        return jsonify(records), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

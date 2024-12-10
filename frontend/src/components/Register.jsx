@@ -12,6 +12,9 @@ export default function Register(){
         lastname: "",
         role: "",
         username: "",
+        phone:"",
+        address:"",
+        dob:"",
     });
     useEffect(() => {  
         setUserID(params.id.toString());
@@ -80,7 +83,7 @@ export default function Register(){
                 </div>
                 <div className="col-4"></div>
                 <div className="col-4"></div>
-                <div className="col-4 p-3 position-flex top-0 start-50">
+                <div className="col-4 p-3 position-flex top-0 start-50 text-start">
                     <form className="row g-3" onSubmit={handleRegister} action={`/admin-dashboard/${userID}`}>
                         <div className="row g-3 col-12">
                             <div className="col-md-12">
@@ -91,9 +94,9 @@ export default function Register(){
                                 <input type="text" className="form-control" id="inputLastName" placeholder="Last Name" value={formUser.lastname} onChange={(e) => updateForm({ lastname: e.target.value})} required/>
                             </div>
                         </div>
-                        <div className="col-md-8 d-none">
+                        <div className="col-md-8">
                             <label htmlFor="inputDateOfBirth" className="form-label">Date of Birth</label>
-                            <input type="date" className="form-control" id="inputDateOfBirth"/>
+                            <input type="date" className="form-control" id="inputDateOfBirth" value={formUser.dob} onChange={(e) => updateForm({ dob: e.target.value})}/>
                         </div>
                         <div className="col-md-4">  
                             <label htmlFor="inputRole" className="form-label">Role</label>
@@ -119,13 +122,13 @@ export default function Register(){
                             <label htmlFor="inputConfirmPassword" className="form-label">Confirm Password</label>
                             <input type="password" className="form-control" id="inputConfirmPassword"/>
                         </div>
-                        <div className="col-md-12 d-none">
+                        <div className="col-md-12">
                             <label htmlFor="inputPhone" className="form-label">Phone</label>
-                            <input type="tel" className="form-control" id="inputPhone"/>
+                            <input type="tel" className="form-control" id="inputPhone" value={formUser.phone} onChange={(e) => updateForm({ phone: e.target.value})}/>
                         </div>
-                        <div className="col-12 d-none">
+                        <div className="col-12">
                             <label htmlFor="inputAddress" className="form-label">Address</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St"/>
+                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 London St, Sarnia, Ontario Canada" value={formUser.address} onChange={(e) => updateForm({ address: e.target.value})}/>
                         </div>
                         <div className="col-12 d-none">
                             <label htmlFor="inputAddress2" className="form-label">Address 2</label>
@@ -154,7 +157,7 @@ export default function Register(){
                                 </label>
                             </div>
                         </div>
-                        <div className="col-12">                            
+                        <div className="col-12 text-end">                            
                             <button type="submit" className="btn btn-primary">Register</button>
                             <a href="/" className="btn btn-primary d-none">Submit</a>
                         </div>
