@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Your Profile</h1>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Name:</strong> {{ student.name }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ student.email }}</li>
+        <li class="list-group-item"><strong>Address:</strong> {{ student.address }}</li>
+        <li class="list-group-item"><strong>Phone Number:</strong> {{ student.phone_number }}</li>
+    </ul>
+    <a href="{{ url_for('student.update_profile') }}" class="btn btn-primary mt-3">Update Profile</a>
+</div>
+{% endblock %}

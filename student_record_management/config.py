@@ -1,6 +1,14 @@
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class Config:
-    # Correct MongoDB URI with your actual cluster URL and database name
-    MONGO_URI = "mongodb+srv://root:ZOKW1BKK0MwcEN9H@cluster0.onoha.mongodb.net/student_db?retryWrites=true&w=majority"
-    SECRET_KEY = os.urandom(24)  # You can set a fixed key or use environment variables for production
+    # MongoDB URI and SECRET_KEY are fetched securely from the environment
+    MONGO_URI = os.getenv("MONGO_URI")
+    SECRET_KEY = os.getenv("SECRET_KEY")
+
+    # Admin credentials loaded from the .env file
+    ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
