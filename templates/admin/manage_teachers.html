@@ -1,49 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Teachers</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2>Manage Teachers</h2>
-        <a href="{{ url_for('admin_routes.add_teacher') }}" class="btn btn-success mb-3">Add New Teacher</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Course</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for teacher in teachers %}
-                <tr>
-                    <td>{{ teacher.name }}</td>
-                    <td>{{ teacher.dob }}</td>
-                    <td>{{ teacher.department }}</td>
-                    <td>{{ teacher.email }}</td>
-                    <td>
-                        <a href="{{ url_for('admin_routes.update_teacher', teacher_id=teacher._id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ url_for('admin_routes.delete_teacher', teacher_id=teacher._id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="5" class="text-center">No teachers found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-info mb-3">Download Report</a>
-        <a href="{{ url_for('admin_routes.admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% extends "layout.html" %}
+
+{% block title %}Manage Teachers{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background-color: #f8f9fa; min-height: 100vh;">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h1 class="display-5 text-primary font-weight-bold">Manage Teachers</h1>
+            <p class="lead text-secondary">View, edit, and delete teacher records</p>
+            <hr class="w-50 mx-auto">
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- Buttons Section -->
+    <div class="row mb-3">
+        <div class="col d-flex align-items-center">
+            
+            <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-info btn-sm me-2 shadow">
+                <i class="fas fa-download mr-1"></i> Download Report
+            </a>
+            <a href="{{ url_for('admin_routes.admin_dashboard') }}" class="btn btn-secondary btn-sm shadow">
+                <i class="fas fa-tachometer-alt mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered text-center align-middle mb-0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date of Birth</th>
+                                    <th>Course</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for teacher in teachers %}
+                                <tr>
+                                    <td>{{ teacher.name }}</td>
+                                    <td>{{ teacher.dob }}</td>
+                                    <td>{{ teacher.course }}</td>
+                                    <td>{{ teacher.email }}</td>
+                                    <td>
+                                        <a href="{{ url_for('admin_routes.update_teacher', teacher_id=teacher._id) }}" 
+                                           class="btn btn-warning btn-sm mx-1 shadow-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <form action="{{ url_for('admin_routes.delete_teacher', teacher_id=teacher._id) }}" 
+                                              method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm mx-1 shadow-sm" 
+                                                    onclick="return confirm('Are you sure you want to delete this teacher?');">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        No teachers found. Add new teachers to manage here.
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome for Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+{% endblock %}
