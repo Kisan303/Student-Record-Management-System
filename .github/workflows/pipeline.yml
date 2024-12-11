@@ -3,7 +3,7 @@ on:
   #initiates the pipeline when there is  push event in the main branch
   push:
     branches:
-      - WorkFlowTest
+      - Kisan-Tset
 
 jobs:
   #Stage 1: Building the docker image
