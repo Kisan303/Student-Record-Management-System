@@ -32,7 +32,7 @@ jobs:
   unit-test:
     name: The job to unit test the application
     runs-on: ubuntu-latest
-    needs: [ build-docker-image ] # Wait for the build-docker-image to finish
+    needs: [ build-docker-image ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12.6' # Specify your Python version
+          python-version: '3.12'  # Your Python version
 
       - name: Install Dependencies
         run: |
@@ -48,7 +48,9 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
-      - name: Run Unit Tests
+      - name: Add Project Root to PYTHONPATH
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           pytest tests/test_app.py --maxfail=1 --disable-warnings
+
   
