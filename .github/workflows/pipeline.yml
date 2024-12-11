@@ -3,7 +3,6 @@ on:
   #initiates the pipeline when there is  push event in the main branch
   push:
     branches:
-      - main
       - integrate-backend
 
 jobs:
@@ -20,14 +19,14 @@ jobs:
                                   # that clones the project into the working directory
 
       - name: Build Docker Image
-        run: docker build -t student-record-management:v1.0.1 -f Dockerfile .
+        run: docker build -t flask-app:v1.0.0 -f Dockerfile .
 
   deploy-docker-image:
     name: Deploy the flask image
     runs-on: csd-windows-local # Using the self-hosted runner
     steps:
       - name: Deploy the image
-        run: docker run -d -p 5000:5000 student-record-management:v1.0.1 # -d tag allows the container in the background
+        run: docker run -d -p 5000:5000 flask-app:v1.0.0 # -d tag allows the container in the background
 
   #Stage 2: Running the unit testing
   unit-test:
