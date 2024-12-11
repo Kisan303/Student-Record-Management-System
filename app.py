@@ -15,16 +15,16 @@ app.config.from_object(Config)
 mongo.init_app(app)
 
 # Test route to check MongoDB connection
-@app.route('/test_db')
-def test_db():
-    try:
-        # Try to access the MongoDB database
-        db = mongo.db  # Get the database instance from the PyMongo object
-        students_collection = db.students  # Access the 'students' collection
-        count = students_collection.count_documents({})  # Count documents in the collection
-        return f"MongoDB connection successful! Found {count} students in the database."
-    except Exception as e:
-        return f"Error connecting to MongoDB: {str(e)}"
+# @app.route('/test_db')
+# def test_db():
+#     try:
+#         # Try to access the MongoDB database
+#         db = mongo.db  # Get the database instance from the PyMongo object
+#         students_collection = db.students  # Access the 'students' collection
+#         count = students_collection.count_documents({})  # Count documents in the collection
+#         return f"MongoDB connection successful! Found {count} students in the database."
+#     except Exception as e:
+#         return f"Error connecting to MongoDB: {str(e)}"
 
 # Root route: Load the layout.html as the default page
 @app.route('/')

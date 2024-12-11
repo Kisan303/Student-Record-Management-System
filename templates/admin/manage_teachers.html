@@ -26,7 +26,7 @@
                 <tr>
                     <td>{{ teacher.name }}</td>
                     <td>{{ teacher.dob }}</td>
-                    <td>{{ teacher.department }}</td>
+                    <td>{{ teacher.course }}</td>
                     <td>{{ teacher.email }}</td>
                     <td>
                         <a href="{{ url_for('admin_routes.update_teacher', teacher_id=teacher._id) }}" class="btn btn-warning btn-sm">Edit</a>
