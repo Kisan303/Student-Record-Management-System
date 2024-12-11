@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from extensions import mongo
 from routes.admin_routes import admin_routes
 from routes.teacher_routes import teacher_routes
@@ -20,15 +20,31 @@ def test_db():
     try:
         # Try to access the MongoDB database
         db = mongo.db  # Get the database instance from the PyMongo object
-        # Check if the 'students' collection exists (as an example)
-        students_collection = db.students
-        count = students_collection.count_documents({})  # Count documents in the 'students' collection
+        students_collection = db.students  # Access the 'students' collection
+        count = students_collection.count_documents({})  # Count documents in the collection
         return f"MongoDB connection successful! Found {count} students in the database."
     except Exception as e:
         return f"Error connecting to MongoDB: {str(e)}"
 
+# Root route: Load the layout.html as the default page
+@app.route('/')
+def home():
+    return render_template('home.html')  # Load layout.html as the landing page
+
+
+
 # Register Blueprints
-app.register_blueprint(admin_routes, url_prefix='/admin')
+app.register_blueprint(admin_routes, url_prefix='/admin')# About Us route
+@app.route('/about')
+def about():
+    return render_template('about.html')  # Load about.html
+
+# Contact Us route
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')  # Load contact.html
+
+
 app.register_blueprint(teacher_routes, url_prefix='/teacher')
 app.register_blueprint(student_routes, url_prefix='/student')
 

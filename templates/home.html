@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Home - Student Record Management System{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container d-flex align-items-center">
+        <div class="row">
+            <!-- Left-side content -->
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold">Welcome to the Student Record Management System</h1>
+                <p class="lead mt-3">
+                    Manage and organize student information seamlessly. This platform allows administrators, teachers, and students to manage records efficiently.
+                </p>
+                <a href="{{ url_for('admin_routes.login') }}" class="btn btn-primary btn-lg mt-3">Get Started</a>
+            </div>
+            <!-- Right-side hero image -->
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='images/hero-image.png') }}" class="img-fluid rounded" alt="Hero Image">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
