@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-export default function StudentDashboard(){
+export default function StudentDashboard({id}){
     const [dataSet, setDataSet] = useState([]);
     const params = useParams();
     const [records, setRecords] = useState([]);
@@ -8,10 +8,11 @@ export default function StudentDashboard(){
     const [studentID, setStudentID] = useState("");
 
     useEffect(() => {
-        setStudentID(params.id.toString());   
+        if(id == null){setStudentID(params.id.toString())}
+        else{setStudentID(id)};     
         const displayDashboard = async () => { 
             try{
-                await fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+                await fetch(`http://127.0.0.1:5000/${studentID}`, {
                     method: "GET",
                     headers: {
                     "Content-Type": "application/json",

@@ -27,16 +27,17 @@ classRecord_collection = db["record"]
 
 # Empty table
 # users_collection.drop()
-
+# classSection_collection.drop()
+# classRecord_collection.drop()
 # To add data to MongoDB we can use the client and the functions insert_many() or insert_one()
 # insert_many() allows you to add a list of JSONs
 # insert_one() allows you to add a single JSON
 
-# mock_data = [{"role": "admin", "firstname": "Kisan", "lastname": "Rai", "username": "test_admin", "email": "test_admin@gmail.com", "password": "admin1234"},
-#              {"role": "teacher", "firstname": "Mahan", "lastname": "Timalsena", "username": "test_teacher", "email": "test_teacher@gmail.com",  "password": "teacher1234"},
-#              {"role": "student", "firstname": "Ralph", "lastname": "Ompoc", "username": "test_student", "email": "test_student@gmail.com",  "password": "student1234"}]
+# mock_data = [{"role": "admin", "firstname": "Kisan", "lastname": "Rai", "username": "test_admin", "email": "test_admin@gmail.com", "password": "admin1234"}]
 # mock_section = [{"section": 1, "course_code": "CSD-3103", "course_name": "Full Stack Java Script"},
-#                {"section": 1, "course_code": "CSD-4303", "course_name": "Cloud Computing"}]
+#                 {"section": 1, "course_code": "CSD-4303", "course_name": "Cloud Computing"},
+#                 {"section": 2, "course_code": "CSD-4453", "course_name": "Programming Java EE"},
+#                 {"section": 2, "course_code": "CSD-2456", "course_name": "Front-End Web Development"}]
 # mock_record = [{"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755e852e3d3fa95f412bcf9", "grade": 3.2},
 #                {"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f0bec5e20a4282cce633", "grade": 3.6},
 #                {"section_id": "67563424aa3190014545e37c", "teacher_id": "6755f80c38d16dce2c95a629", "student_id": "6755f87638d16dce2c95a62a", "grade": 3.9},
@@ -63,6 +64,13 @@ def delete_user(email):
     #user_id = id
     # print(user_id)
     user = users_collection.delete_one({"email": str(email)})
+    print(user)
+    return json.dumps(user, default=str), 200
+
+@flask_app.route("/update_user/<string:user_id>", methods=['PUT'])
+def update_user(user_id):
+    edit_user = request.get_json()
+    user = users_collection.update_one({"_id": ObjectId(str(user_id))},edit_user)
     print(user)
     return json.dumps(user, default=str), 200
 

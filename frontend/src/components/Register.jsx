@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Register(){
     const navigate = useNavigate();
     const [userID, setUserID] = useState("");
+    const [userData, setUserData] = useState([]);
     const params = useParams(); 
     const [formUser, setFormUser] = useState({
         email: "",
@@ -12,34 +14,61 @@ export default function Register(){
         lastname: "",
         role: "",
         username: "",
-        phone:"",
-        address:"",
-        dob:"",
-        gender:"",
-        department:"",
-        program:"",
+        phone: "",
+        address: "",
+        dob: "",
+        gender: "",
+        department: "",
+        program: "",
     });
-    useEffect(() => {  
-        setUserID(params.id.toString());
-    }, [1]);   
-    async function handleRegister(e){
-        e.preventDefault();
+    const [stop, setStop] = useState(0);
+    const url = window.location.href;
+    function getUserData() { 
+        try{
+            fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                },
+            }).then(data => data.json())
+            .then(promisedata => setUserData(promisedata))
+            .catch(error => console.error("Error:", error));
+            console.log("Able to fetch!");
+        }catch(error){
+            console.error('A problem occurred with your fetch operation: ', error);
+        }
+    };  
+    async function handleRegister(){
         const registerUser = { ...formUser };
         try{
             let response;
             let userdata;
-            response = await fetch('http://127.0.0.1:5000/register', {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(registerUser),
-                  });
-            if(response.ok) {
-                console.log("Success registration!");
-                navigate(`/admin-dashboard/${userID}`)
+            if(!(url.includes("update-user"))){
+                response = await fetch('http://127.0.0.1:5000/register', {
+                        method: "POST",
+                        headers: {
+                        "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(registerUser),
+                    });
+                if(response.ok) {
+                    console.log("Success registration!");
+                    navigate(`/admin-dashboard/${userID}`)
+                };
+                if(!response.ok) console.log("Fail to register!");
+            }else{
+                response = await fetch(`http://127.0.0.1:5000/update-user/${params.id.toString()}`, {
+                        method: "PUT",
+                        headers: {
+                        "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(registerUser),
+                    });
+                if(response.ok) {
+                    console.log("Success registration!");
+                };
+                if(!response.ok) console.log("Fail to register!");
             };
-            if(!response.ok) console.log("Fail to register!");
         }catch(error){
             console.error('A problem occurred with your fetch operation: ', error);
         }
@@ -49,7 +78,28 @@ export default function Register(){
         return setFormUser((prev) => {
             return { ...prev, ...value };
         });
-    };
+    };  
+    useEffect(() => {  
+        setUserID(params.id.toString());
+        console.log(userData);
+        getUserData();
+        if (url.includes("update-user")) {
+            setFormUser({
+                email: userData.email,
+                password: userData.password,
+                firstname: userData.firstname,
+                lastname: userData.lastname,
+                role: userData.role,
+                username: userData.username,
+                phone: userData.phone,
+                address: userData.address,
+                dob: userData.dob,
+                gender: userData.gender,
+                department: userData.department,
+                program: userData.program,
+            });
+        };
+    });
     
     return (
         <>
@@ -183,7 +233,7 @@ export default function Register(){
                             </div>
                         </div>
                         <div className="col-12 text-end">                            
-                            <button type="submit" className="btn btn-primary">Register</button>
+                            <button type="submit" className="btn btn-primary">Register/Update</button>
                             <a href="/" className="btn btn-primary d-none">Submit</a>
                         </div>
                     </form>

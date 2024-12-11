@@ -85,12 +85,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/update-course/:id",
+    path: "/update-user/:id",
     element: <User />,
     children: [
       {
-        path: "/update-course/:id",
-        element: <CourseForm />,
+        path: "/update-user/:id",
+        element: <Register />,
       },
     ],
   },
