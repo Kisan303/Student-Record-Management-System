@@ -67,10 +67,11 @@ def delete_user(email):
     print(user)
     return json.dumps(user, default=str), 200
 
-@flask_app.route("/update_user/<string:user_id>", methods=['PUT'])
+@flask_app.route("/update_user/<string:user_id>", methods=['POST'])
 def update_user(user_id):
-    edit_user = request.get_json()
-    user = users_collection.update_one({"_id": ObjectId(str(user_id))},edit_user)
+    edit_user = request.json
+    print(edit_user)
+    user = users_collection.update_one({"_id": ObjectId(str(user_id))},{"$set": edit_user})
     print(user)
     return json.dumps(user, default=str), 200
 

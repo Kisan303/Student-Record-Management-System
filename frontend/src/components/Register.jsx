@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function Register(){
     const navigate = useNavigate();
+    const [isNew, setIsNew] = useState(true);
     const [userID, setUserID] = useState("");
     const [userData, setUserData] = useState([]);
     const params = useParams(); 
@@ -23,84 +23,130 @@ export default function Register(){
     });
     const [stop, setStop] = useState(0);
     const url = window.location.href;
-    function getUserData() { 
-        try{
-            fetch(`http://127.0.0.1:5000/${params.id.toString()}`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                },
-            }).then(data => data.json())
-            .then(promisedata => setUserData(promisedata))
-            .catch(error => console.error("Error:", error));
-            console.log("Able to fetch!");
-        }catch(error){
-            console.error('A problem occurred with your fetch operation: ', error);
-        }
-    };  
-    async function handleRegister(){
-        const registerUser = { ...formUser };
-        try{
-            let response;
-            let userdata;
-            if(!(url.includes("update-user"))){
-                response = await fetch('http://127.0.0.1:5000/register', {
-                        method: "POST",
-                        headers: {
-                        "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(registerUser),
-                    });
-                if(response.ok) {
-                    console.log("Success registration!");
-                    navigate(`/admin-dashboard/${userID}`)
-                };
-                if(!response.ok) console.log("Fail to register!");
-            }else{
-                response = await fetch(`http://127.0.0.1:5000/update-user/${params.id.toString()}`, {
-                        method: "PUT",
-                        headers: {
-                        "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(registerUser),
-                    });
-                if(response.ok) {
-                    console.log("Success registration!");
-                };
-                if(!response.ok) console.log("Fail to register!");
-            };
-        }catch(error){
-            console.error('A problem occurred with your fetch operation: ', error);
-        }
-    };
     
-    function updateForm(value) {
-        return setFormUser((prev) => {
-            return { ...prev, ...value };
-        });
-    };  
     useEffect(() => {  
         setUserID(params.id.toString());
-        console.log(userData);
-        getUserData();
-        if (url.includes("update-user")) {
-            setFormUser({
-                email: userData.email,
-                password: userData.password,
-                firstname: userData.firstname,
-                lastname: userData.lastname,
-                role: userData.role,
-                username: userData.username,
-                phone: userData.phone,
-                address: userData.address,
-                dob: userData.dob,
-                gender: userData.gender,
-                department: userData.department,
-                program: userData.program,
-            });
-        };
+        if(url.includes("update-user")){
+            async function fetchData() {
+                const id = params.id?.toString() || undefined;
+                if(!id) return;
+                setIsNew(false);
+                const response = await fetch(
+                `http://127.0.0.1:5000/${params.id.toString()}`
+                );
+                if(response.ok) 
+                //   setFormName("Update Form");
+                //   setButtonName("Update Customer Information");
+                if (!response.ok) {
+                const message = `An error has occurred: ${response.statusText}`;
+                console.error(message);
+                return;
+                }
+                const record = await response.json();
+                if (!record) {
+                console.warn(`Record with id ${id} not found`);
+                navigate("/");
+                return;
+                }
+                setFormUser(record);
+            }
+            fetchData();}
+        return;
+    }, [params.id, navigate]);
+// These methods will update the state properties.
+function updateForm(value) {
+    return setFormUser((prev) => {
+      return { ...prev, ...value };
     });
+  }
+
+  // This function will handle the submission.
+  async function handleRegister(e) {
+    e.preventDefault();
+    const person = { ...formUser };
+    try {
+      let response;
+      if (isNew) {
+        response = await fetch('http://127.0.0.1:5000/register', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(person),
+        });
+      } else {
+        response = await fetch(`http://127.0.0.1:5000/update-user/${params.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(person),
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('A problem occurred with your fetch operation: ', error);
+    } finally {
+      setFormUser({ 
+        email: "",
+        password: "",
+        firstname: "",
+        lastname: "",
+        role: "",
+        username: "",
+        phone: "",
+        address: "",
+        dob: "",
+        gender: "",
+        department: "",
+        program: "",});
+      navigate("/");
+    }
+  }
+    // async function handleRegister(){
+    //     const registerUser = { ...formUser };
+    //     try{
+    //         let response;
+    //         let userdata;
+    //         if(!(url.includes("update-user"))){
+    //             response = await fetch('http://127.0.0.1:5000/register', {
+    //                     method: "POST",
+    //                     headers: {
+    //                     "Content-Type": "application/json",
+    //                     },
+    //                     body: JSON.stringify(registerUser),
+    //                 });
+    //             if(response.ok) {
+    //                 console.log("Success registration!");
+    //                 navigate(`/admin-dashboard/${userID}`)
+    //             };
+    //             if(!response.ok) console.log("Fail to register!");
+    //         }else{
+    //             response = await fetch(`http://127.0.0.1:5000/update-user/${params.id.toString()}`, {
+    //                     method: "PUT",
+    //                     headers: {
+    //                     "Content-Type": "application/json",
+    //                     },
+    //                     body: JSON.stringify(registerUser),
+    //                 });
+    //             if(response.ok) {
+    //                 console.log("Success registration!");
+    //             };
+    //             if(!response.ok) console.log("Fail to register!");
+    //         };
+    //     }catch(error){
+    //         console.error('A problem occurred with your fetch operation: ', error);
+    //     }
+    // };
     
+    // function updateForm(value) {
+    //     return setFormUser((prev) => {
+    //         return { ...prev, ...value };
+    //     });
+    // };      
     return (
         <>
             <div className="row col-12 bg-primary-subtle text-primary-emphasis d-flex justify-content-center">
