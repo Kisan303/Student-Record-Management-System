@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Contact Us - Student Record Management System{% endblock %}
+
+{% block content %}
+<!-- Contact Us Section UI -->
+<div class="container mt-5 mb-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 font-weight-bold text-dark">Contact Us</h1>
+        <p class="lead text-muted">We would love to hear from you! Please fill out the form below, and we will get back to you as soon as possible.</p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body p-5">
+                    <h3 class="card-title text-primary mb-4 text-center">Get In Touch</h3>
+                    <form method="POST" action="/contact">
+                        <!-- Name Input -->
+                        <div class="form-group mb-4">
+                            <label for="name" class="text-muted">Your Name</label>
+                            <input type="text" class="form-control form-control-lg border-0 shadow-sm" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="form-group mb-4">
+                            <label for="email" class="text-muted">Your Email</label>
+                            <input type="email" class="form-control form-control-lg border-0 shadow-sm" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <!-- Message Input --> 
+                        <div class="form-group mb-4">
+                            <label for="message" class="text-muted">Your Message</label>
+                            <textarea class="form-control form-control-lg border-0 shadow-sm" id="message" name="message" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block btn-lg py-2">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+input::placeholder, textarea::placeholder {
+    color: gray;        /* Set placeholder text color to gray */
+    font-size: 0.9rem;   /* Make the placeholder text smaller */
+}
+</style>
+{% endblock %}
+{% endblock %}
