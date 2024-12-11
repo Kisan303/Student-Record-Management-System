@@ -1,32 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h2 class="mt-5">Admin Dashboard</h2>
-        <p>Welcome to the Admin Dashboard!</p>
-        
-        <!-- Student Management Section -->
-        <h4 class="mt-4">Student Management</h4>
-        <a href="{{ url_for('admin_routes.add_student') }}" class="btn btn-success">Add Student</a>
-        <a href="{{ url_for('admin_routes.manage_students') }}" class="btn btn-info">Manage Students</a>
-        <a href="{{ url_for('admin_routes.generate_report') }}" class="btn btn-warning">Generate Student Report</a>
+{% extends "layout.html" %}
 
-        <!-- Teacher Management Section -->
-        <h4 class="mt-4">Teacher Management</h4>
-        <a href="{{ url_for('admin_routes.add_teacher') }}" class="btn btn-success">Add Teacher</a>
-        <a href="{{ url_for('admin_routes.manage_teachers') }}" class="btn btn-info">Manage Teachers</a>
-        <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-warning">Generate Teacher Report</a>
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="background-color: #f8f9fa; min-height: 75vh;">
+    <!-- Page Header -->
+    <div class="row py-4">
+        <div class="col text-center">
+            <h1 class="display-4 text-dark font-weight-bold">Admin Dashboard</h1>
+            <p class="lead text-secondary">Manage students, teachers, and reports seamlessly</p>
+            <hr class="w-50 mx-auto">
+        </div>
     </div>
 
-    <!-- Logout Button -->
-    <div class="mt-4">
-        <a href="{{ url_for('admin_routes.logout') }}" class="btn btn-danger">Logout</a>
+    <!-- Student and Teacher Management Sections -->
+    <div class="row justify-content-center">
+        <!-- Student Management -->
+        <div class="col-lg-5 col-md-6 mb-4">
+            <div class="card shadow border-0 rounded-lg h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-dark mb-3">Student Management</h4>
+                    <p class="text-muted">Add, manage, and generate student reports with ease.</p>
+                    <div class="d-flex justify-content-around">
+                        <a href="{{ url_for('admin_routes.add_student') }}" class="btn btn-success">
+                            <i class="fas fa-user-plus mr-1"></i> Add Student
+                        </a>
+                        <a href="{{ url_for('admin_routes.manage_students') }}" class="btn btn-info">
+                            <i class="fas fa-users-cog mr-1"></i> Manage Students
+                        </a>
+                        <a href="{{ url_for('admin_routes.generate_report') }}" class="btn btn-warning">
+                            <i class="fas fa-file-alt mr-1"></i> Generate Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Management -->
+        <div class="col-lg-5 col-md-6 mb-4">
+            <div class="card shadow border-0 rounded-lg h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-dark mb-3">Teacher Management</h4>
+                    <p class="text-muted">Manage teacher records and reports efficiently.</p>
+                    <div class="d-flex justify-content-around">
+                        <a href="{{ url_for('admin_routes.add_teacher') }}" class="btn btn-success">
+                            <i class="fas fa-chalkboard-teacher mr-1"></i> Add Teacher
+                        </a>
+                        <a href="{{ url_for('admin_routes.manage_teachers') }}" class="btn btn-info">
+                            <i class="fas fa-user-tie mr-1"></i> Manage Teachers
+                        </a>
+                        <a href="{{ url_for('admin_routes.generate_teacher_report') }}" class="btn btn-warning">
+                            <i class="fas fa-file-alt mr-1"></i> Generate Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- Logout Section -->
+    <div class="row mt-4">
+        <div class="col text-center">
+            <a href="{{ url_for('admin_routes.logout') }}" class="btn btn-danger btn-lg shadow">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome for Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+{% endblock %}
