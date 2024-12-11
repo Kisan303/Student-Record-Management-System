@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Clone and Checkout to the repository
         uses: actions/checkout@v2 # this is a GitHub action (pre-defined job)
-                                  # that clones the project into the working directory
+                                  # that clones the project into the working directory.
 
       - name: Build Docker Image
         run: docker build -t student-record-management:v1.0.1 -f Dockerfile .
