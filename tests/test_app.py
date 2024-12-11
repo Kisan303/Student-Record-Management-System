@@ -56,14 +56,14 @@ class FlaskTestCase(unittest.TestCase):
         self.app.testing = True
 
     # Testing the index if post is implemented
-    def test_index_get(self):
+    def test_unknown_route(self):
         response = self.app.get("/new-account")
         print("The received status code: ", response.status_code)
         print("The expected status code: ", 404)
         self.assertEqual(first=response.status_code, second=404)
 
     # Testing the index if get is implemented
-    def test_index_post(self):
+    def test_home_page_route(self):
         response = self.app.get("/")
         print("The received status code: ", response.status_code)
         print("The expected status code: ", 200)
@@ -82,3 +82,10 @@ class FlaskTestCase(unittest.TestCase):
         print("Searching for: ", "Student Login")
         print("Found data for: ", response.data)
         self.assertIn(b'Student Login', response.data)
+
+    # Testing the index if the "Welcome to Dalmart" is found inside the page
+    def test_teacher_login_route(self):
+        response = self.app.get("/teacher/teacher_login")
+        print("Searching for: ", "Teacher Login")
+        print("Found data for: ", response.data)
+        self.assertIn(b'Teacher Login', response.data)
