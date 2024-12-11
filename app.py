@@ -33,4 +33,4 @@ app.register_blueprint(teacher_routes, url_prefix='/teacher')
 app.register_blueprint(student_routes, url_prefix='/student')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
