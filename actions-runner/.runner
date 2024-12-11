@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "ACER-E15",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus15.actions.githubusercontent.com/GxmNjbKj1ss1hVYXEEtL89o6MkNe2WsAf4pkXSgLNpsOCscbdU/",
+  "gitHubUrl": "https://github.com/Kisan303/Student-Record-Management-System",
+  "workFolder": "./run.cmd"
+}
