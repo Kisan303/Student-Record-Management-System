@@ -1,0 +1,10 @@
+# Ignore the .env file containing sensitive credentials
+.env
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+env/
